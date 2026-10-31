@@ -1,3 +1,7 @@
-export * from './gemini-adapter';
-export * from './gemini-cache';
-export * from './gemini-fallbacks';
+export * from '@/features/ai';
+export {
+  createPlanCacheKey,
+  getCachedEnrichment,
+  setCachedEnrichment,
+} from './gemini-cache';
+export { getOfflineFallback } from './gemini-fallbacks';

@@ -1,1 +1,3 @@
-export * from '@/lib/ai/prompts';
+export * from './event-planner.prompt';
+export * from './replan.prompt';
+export * from './assistant.prompt';

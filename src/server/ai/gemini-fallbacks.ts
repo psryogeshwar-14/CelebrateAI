@@ -1,9 +1,6 @@
 import { ComputedPlan } from '@/lib/engine/types';
-import { getOfflineFallbackEnrichment, ValidatedEnrichmentOutput } from '@/lib/ai/validate';
+import { recommendationService } from '@/features/ai';
 
-/**
- * Returns deterministic offline cultural templates when Gemini API is unconfigured or unreachable.
- */
-export function getOfflineFallback(plan: ComputedPlan): ValidatedEnrichmentOutput {
-  return getOfflineFallbackEnrichment(plan);
+export function getOfflineFallback(plan: ComputedPlan) {
+  return recommendationService.getOfflineFallback(plan);
 }

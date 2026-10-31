@@ -1,1 +1,1 @@
-export * from '@/lib/ai/schema';
+export * from './recommendation.schema';
