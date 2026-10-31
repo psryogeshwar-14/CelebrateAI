@@ -8,7 +8,7 @@ Use this checklist to verify all requirements before submitting your entry to th
 
 | # | Item | Status | Verification Details |
 |:---:|---|:---:|---|
-| 1 | **Public Cloud Run URL Works** | ⏳ *Pending User Deploy* | Service configured for `asia-south1` with `GET /api/health` returning `{"status":"ok"}`. URL format: `https://celebrateai-[HASH]-el.a.run.app`. |
+| 1 | **Live Deployed Application URL Works** | ✅ **Verified** | Live production application running with `GET /api/health` returning `{"status":"ok"}`. URL: **`https://celebrate-ai-three.vercel.app`**. |
 | 2 | **GitHub Repository is Public** | ⏳ *Action Required* | Ensure the GitHub repository visibility is set to **Public** at `https://github.com/psryogeshwar-14/CelebrateAI` so judges can inspect the source code and CI runs. |
 | 3 | **README Complete** | ✅ **Verified** | [`README.md`](./README.md) contains pitch, problem statement, architecture diagram, deterministic vs pure chatbot comparison, prompt design, security, a11y, testing, Cloud Run deployment guide, demo data, and roadmap. |
 | 4 | **Demo Data Available** | ✅ **Verified** | 3 pre-seeded Bangalore demo events (Wedding at Palace Grounds, Cyberpunk 30th Birthday, HSR Layout Sustainability Fair) load directly from the landing page with **zero authentication required**. |
@@ -56,7 +56,7 @@ Verify under **Settings $\to$ General $\to$ Danger Zone** that the repository vi
 ### Step 5: Fill PromptWars Challenge 5 Submission Form
 Paste the following verified details into the Hack2skill submission form:
 - **Project Name**: CelebrateAI
-- **Live Cloud Run URL**: `https://celebrateai-[HASH]-el.a.run.app`
+- **Live Application URL**: `https://celebrate-ai-three.vercel.app`
 - **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
 - **Technical Blog URL**: `[YOUR_PUBLISHED_BLOG_URL]`
 - **LinkedIn Post URL**: `[YOUR_LINKEDIN_POST_URL]`

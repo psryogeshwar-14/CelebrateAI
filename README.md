@@ -15,9 +15,9 @@
 
 ## 🌐 Live Deployment & Repository
 
-- **Live Application URL**: `https://celebrateai-placeholder-el.a.run.app` *(or your deployed Cloud Run service URL)*
+- **Live Application URL**: `https://celebrate-ai-three.vercel.app`
 - **Local Development URL**: `http://localhost:3000`
-- **Health Check Endpoint**: `https://celebrateai-placeholder-el.a.run.app/api/health`
+- **Health Check Endpoint**: `https://celebrate-ai-three.vercel.app/api/health`
 - **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
 
 ---
