@@ -18,7 +18,7 @@ describe('PromptWars Final Verification: 16-Step User Journey', () => {
       guestCount: 150,
       totalBudget: 500000,
       currency: 'INR',
-      style: 'traditional',
+      style: 'balanced',
       venueType: 'indoor',
       dietaryRequirements: ['Vegetarian', 'Jain'],
       accessibilityRequirements: ['Wheelchair Access'],
