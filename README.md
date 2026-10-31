@@ -9,7 +9,7 @@
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
 [![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
 [![Google Cloud Run](https://img.shields.io/badge/Cloud%20Run-asia--south1-4285F4?logo=googlecloud&logoColor=white)](https://cloud.google.com/run)
-[![Tests](https://img.shields.io/badge/Tests-111%20passed-brightgreen)](https://vitest.dev/)
+[![Tests](https://img.shields.io/badge/Tests-112%20passed-brightgreen)](https://vitest.dev/)
 
 ---
 
@@ -179,7 +179,7 @@ CelebrateAI is engineered to comply with **WCAG 2.1 AA** standards:
 
 ## 🧪 Testing & Quality Assurance
 
-CelebrateAI includes a comprehensive suite of **111 unit, integration, and security tests across 17 test files** running on Vitest:
+CelebrateAI includes a comprehensive suite of **112 unit, integration, and security tests across 18 test files** running on Vitest:
 
 ```bash
 # Run complete test suite
