@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createAdminSupabaseClient } from './admin';
 import { BENGALURU_DEMO_EVENTS } from '../data/seeds';
 

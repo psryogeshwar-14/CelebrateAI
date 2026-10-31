@@ -3,7 +3,7 @@
 import React from 'react';
 import { EventType } from '@/lib/engine/types';
 import { Users, IndianRupee, AlertCircle } from 'lucide-react';
-import { formatINR } from '@/lib/utils/deterministic';
+import { BudgetDensityCard } from './BudgetDensityCard';
 
 interface WizardStep2ScaleProps {
   eventType: EventType;
@@ -44,7 +44,6 @@ export function WizardStep2Scale({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {/* Guest Count */}
         <div className="space-y-2">
           <label htmlFor="guest-count-input" className="block text-xs font-semibold text-stone-700 dark:text-stone-300">
             Expected Guests ({guestCount})
@@ -62,7 +61,6 @@ export function WizardStep2Scale({
             />
           </div>
 
-          {/* Quick presets */}
           <div className="flex gap-2 pt-1">
             {[50, 150, 250, 500].map((count) => (
               <button
@@ -87,7 +85,6 @@ export function WizardStep2Scale({
           )}
         </div>
 
-        {/* Total Budget */}
         <div className="space-y-2">
           <label htmlFor="budget-input" className="block text-xs font-semibold text-stone-700 dark:text-stone-300">
             Total Target Budget (INR ₹)
@@ -104,7 +101,6 @@ export function WizardStep2Scale({
             />
           </div>
 
-          {/* Quick budget presets */}
           <div className="flex gap-2 pt-1">
             {[200000, 500000, 1000000, 2500000].map((amt) => (
               <button
@@ -134,29 +130,11 @@ export function WizardStep2Scale({
         </div>
       </div>
 
-      {/* Real-time Math Feedback */}
-      <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 flex items-start justify-between">
-        <div className="space-y-1">
-          <div className="text-xs font-semibold text-amber-900 dark:text-amber-200">
-            Deterministic Budget Density
-          </div>
-          <div className="text-xs text-amber-800/80 dark:text-amber-300/80">
-            Provides approx. <strong className="font-mono text-amber-950 dark:text-amber-100">{formatINR(costPerGuest)}</strong> per guest across all categories including contingency.
-          </div>
-          {isCateringTight && (
-            <div className="text-[11px] text-amber-700 dark:text-amber-400 flex items-center space-x-1 pt-1 font-medium">
-              <AlertCircle className="w-3 h-3 text-amber-600 flex-shrink-0" />
-              <span>Catering budget is tight. Consider balanced or street food style.</span>
-            </div>
-          )}
-        </div>
-        <div className="text-right">
-          <div className="text-xs text-amber-800/80 dark:text-amber-300/80">Guaranteed Contingency</div>
-          <div className="font-mono font-bold text-sm text-amber-900 dark:text-amber-100">
-            {formatINR(Math.round(totalBudget * 0.1))} (10%)
-          </div>
-        </div>
-      </div>
+      <BudgetDensityCard
+        costPerGuest={costPerGuest}
+        totalBudget={totalBudget}
+        isCateringTight={isCateringTight}
+      />
     </div>
   );
 }

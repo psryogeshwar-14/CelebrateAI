@@ -47,6 +47,7 @@ function formatLogLine(level: LogLevel, payload: LogPayload): string {
 
 export const logger = {
   info(message: string, details?: Record<string, unknown>, context?: string): void {
+    // eslint-disable-next-line no-console
     console.log(formatLogLine('info', { message, details, context }));
   },
 
@@ -66,6 +67,7 @@ export const logger = {
       timestamp: new Date().toISOString(),
       action,
     };
+    // eslint-disable-next-line no-console
     console.log(`[AUDIT] ${JSON.stringify(sanitizedMeta)}`);
   },
 };

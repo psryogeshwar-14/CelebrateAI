@@ -1,3 +1,16 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "max-depth": ["error", 3]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.{ts,tsx}"],
+      "excludedFiles": ["*.test.ts", "*.test.tsx", "src/test/**"],
+      "rules": {
+        "max-lines": ["error", { "max": 250, "skipBlankLines": true, "skipComments": true }]
+      }
+    }
+  ]
 }

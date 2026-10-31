@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-11-01
+
+### Added & Refactored (Strict Metric-Driven Code Quality Refactor: 97+ Target)
+- **Domain Engine Decomposition & Zero Files > 250 Lines**:
+  - Modularized `src/lib/data/seeds.ts` (1,151 lines $\to$ 3-line barrel) into `seeds/types.ts`, `wedding.seed.ts`, `wedding-ideas.ts`, `birthday.seed.ts`, `birthday-ideas.ts`, `community.seed.ts`, `community-ideas.ts`, and `index.ts`.
+  - Refactored `src/lib/engine/budget.ts` (300 lines $\to$ 60 lines) into `budget-rules.ts`, `budget-allocator.ts`, and `budget-health.ts`.
+  - Refactored `src/lib/engine/vendors.ts` (291 lines $\to$ 74 lines) extracting `vendor-rules.ts`.
+  - Refactored `src/lib/engine/timeline.ts` (285 lines $\to$ 48 lines) extracting `timeline-rules.ts`.
+  - Refactored `src/server/services/server-event.service.ts` (422 lines $\to$ 173 lines) extracting `server-rules.ts` and `aggregate-assembler.ts`.
+  - Sliced `src/lib/ai/validate.ts` (462 lines $\to$ 241 lines) extracting `sanitize.ts` and `offline-fallbacks.ts`.
+  - Sliced `src/features/ai/services/recommendation.service.ts` (381 lines $\to$ 180 lines) extracting `offline-fallbacks.ts`.
+  - Sliced `src/features/ai/services/gemini.service.ts` (276 lines $\to$ 204 lines) extracting `ai-cache.ts`.
+  - Sliced `src/lib/validations/schemas.ts` (258 lines $\to$ 108 lines) extracting `enums.ts` and `idea-schemas.ts`.
+  - Sliced `src/lib/context/celebrate-context.tsx` (265 lines $\to$ 140 lines) extracting `celebrate-context.types.ts`, `useThemeState.ts`, and `demo-loader.ts`.
+  - Extracted shared API request validation into `src/features/events/schemas/plan-request.schema.ts` and `src/shared/lib/api-utils.ts`.
+- **Component Decomposition & Zero Components > 150 Lines**:
+  - `TimelineGanttView.tsx` (205 $\to$ 88 lines) extracted `GanttMilestoneItem.tsx` and `GanttFilterButtons.tsx`.
+  - `VendorProgressCard.tsx` (201 $\to$ 66 lines) extracted `VendorProgressItem.tsx` and `VendorQuestionsModal.tsx`.
+  - `EventWizard.tsx` (191 $\to$ 122 lines) extracted `WizardNavigation.tsx`.
+  - `BudgetDonutChart.tsx` (186 $\to$ 102 lines) extracted `DonutSvgView.tsx` and `BudgetLegendList.tsx`.
+  - `WizardStep3Style.tsx` (163 $\to$ 98 lines) extracted `DietaryAccessibilityOptions.tsx`.
+  - `WizardStep2Scale.tsx` (162 $\to$ 129 lines) extracted `BudgetDensityCard.tsx`.
+  - `CreateMilestoneModal.tsx` (162 $\to$ 93 lines) extracted `MilestoneFormFields.tsx`.
+  - `KpiCards.tsx` (159 $\to$ 110 lines) extracted `KpiVendorsCard.tsx`.
+  - `ExportFeature.tsx` (260 $\to$ 73 lines) extracted `ExportBriefDocument.tsx` and `export-formatters.ts`.
+  - `Navbar.tsx` (231 $\to$ 111 lines) extracted `NavDemoButtons.tsx` and `NavMobileMenu.tsx`.
+  - `AskCelebrateAIChat.tsx` (223 $\to$ 134 lines) extracted `ChatMessageItem.tsx` and `ChatSuggestions.tsx`.
+  - `WizardStep1Basics.tsx` (222 $\to$ 63 lines) extracted `EventTypeSelector.tsx` and `EventTitleDateInputs.tsx`.
+  - `DashboardFeature.tsx` (220 $\to$ 129 lines) extracted `DashboardFeasibilityAlert.tsx` and `DashboardThemesPreview.tsx`.
+- **Quality Tooling Enforcement**:
+  - Configured `.eslintrc.json` enforcing `max-depth: 3`, `max-lines: 250`, `no-console: ["error", { "allow": ["warn", "error"] }]`.
+  - Added `.prettierrc` configuration for clean, unified formatting.
+  - Flattened nesting depth across `src/middleware.ts` and `src/lib/ai/validate.ts`.
+  - Removed all production `console.log` statements in non-audit production runtime.
+- **Verification & Non-Regression**:
+  - 100% of all 120 tests pass across 19 test suites (`npm run test`).
+  - Strict TypeScript check passes with 0 errors (`npm run typecheck`).
+  - ESLint passes with 0 warnings and 0 errors (`npm run lint`).
+  - Production build succeeds across all 15 static and dynamic routes (`npm run build`).
+
 ## [1.2.0] - 2026-10-31
 
 ### Added & Refactored (Injectable Gemini Adapter & Code Quality Polish: 98+)

@@ -8,6 +8,7 @@ import {
 } from '../types';
 import { geminiClientAdapter } from '../adapters/gemini-client';
 import { recommendationService, RecommendationService, sanitizeText } from './recommendation.service';
+import { aiCacheService, AICacheService } from './ai-cache';
 import { buildEventPlannerPrompt } from '../prompts/event-planner.prompt';
 import { buildReplanPrompt } from '../prompts/replan.prompt';
 import { buildAssistantSystemPrompt } from '../prompts/assistant.prompt';
@@ -20,122 +21,56 @@ import { PLANNING_CONSTANTS } from '@/shared/config/constants';
 import { formatINR } from '@/lib/utils/deterministic';
 import { logger } from '@/shared/lib/logger';
 
-interface CacheEntry {
-  timestamp: number;
-  data: ValidatedEnrichmentOutput;
-}
-
 /**
  * GeminiService
- * Orchestrates prompt construction, 10-minute in-memory caching,
- * sliding-window rate limiting, schema validation, and error mapping.
+ * Orchestrates prompt construction, in-memory caching, sliding-window rate limiting,
+ * schema validation, and error mapping.
  */
 export class GeminiService {
   private adapter: IGeminiClientAdapter;
   private recommendationService: RecommendationService;
-  private enrichmentCache = new Map<string, CacheEntry>();
-  private rateLimitMap = new Map<string, number[]>();
+  private cacheService: AICacheService;
 
   constructor(dependencies?: {
     adapter?: IGeminiClientAdapter;
     recommendationService?: RecommendationService;
+    cacheService?: AICacheService;
   }) {
     this.adapter = dependencies?.adapter || geminiClientAdapter;
     this.recommendationService = dependencies?.recommendationService || recommendationService;
+    this.cacheService = dependencies?.cacheService || aiCacheService;
   }
 
-  /**
-   * Evaluates client IP sliding-window rate limiting (10 requests per minute).
-   */
   public checkRateLimit(identifier: string): RateLimitStatus {
-    const now = Date.now();
-    const windowMs = PLANNING_CONSTANTS.RATE_LIMIT.WINDOW_MS;
-    const maxRequests = PLANNING_CONSTANTS.RATE_LIMIT.MAX_REQUESTS;
-
-    const timestamps = (this.rateLimitMap.get(identifier) || []).filter(
-      (t) => now - t < windowMs
-    );
-
-    if (timestamps.length >= maxRequests) {
-      const oldest = timestamps[0];
-      const retryAfterSec = Math.ceil((windowMs - (now - oldest)) / 1000);
-      return {
-        allowed: false,
-        remaining: 0,
-        retryAfterSec: Math.max(1, retryAfterSec),
-      };
-    }
-
-    timestamps.push(now);
-    this.rateLimitMap.set(identifier, timestamps);
-
-    return {
-      allowed: true,
-      remaining: maxRequests - timestamps.length,
-    };
+    return this.cacheService.checkRateLimit(identifier);
   }
 
-  /**
-   * Deterministically generates cache key from plan baseline parameters.
-   */
   public createPlanCacheKey(plan: ComputedPlan): string {
-    const { input, budget } = plan;
-    return [
-      input.eventType,
-      input.city.toLowerCase().trim(),
-      input.eventDate,
-      input.guestCount,
-      budget.totalBudget,
-      input.style || 'balanced',
-      input.venueType || 'indoor',
-      (input.dietaryRequirements || []).slice().sort().join(','),
-      (input.accessibilityRequirements || []).slice().sort().join(','),
-    ].join('|');
+    return this.cacheService.createPlanCacheKey(plan);
   }
 
-  /**
-   * Retrieves unexpired cached recommendation if present.
-   */
   public getCachedEnrichment(cacheKey: string): ValidatedEnrichmentOutput | null {
-    const cached = this.enrichmentCache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < PLANNING_CONSTANTS.CACHE.TTL_MS) {
-      return cached.data;
-    }
-    return null;
+    return this.cacheService.getCachedEnrichment(cacheKey);
   }
 
-  /**
-   * Stores validated recommendations into cache.
-   */
   public setCachedEnrichment(
     cacheKey: string,
     data: ValidatedEnrichmentOutput,
     ttlOffsetMs = 0
   ): void {
-    this.enrichmentCache.set(cacheKey, {
-      timestamp: Date.now() - ttlOffsetMs,
-      data,
-    });
+    this.cacheService.setCachedEnrichment(cacheKey, data, ttlOffsetMs);
   }
 
-  /**
-   * Clears the recommendation cache.
-   */
   public clearCache(): void {
-    this.enrichmentCache.clear();
+    this.cacheService.clearCache();
   }
 
-  /**
-   * Generates creative enrichment via Gemini with caching, prompt injection defense,
-   * Zod post-validation, and fallback degradation.
-   */
   public async generateEnrichment(
     plan: ComputedPlan,
     options?: GeminiServiceOptions
   ): Promise<ValidatedEnrichmentOutput> {
     const cacheKey = this.createPlanCacheKey(plan);
 
-    // 1. In-memory cache hit
     if (!options?.bypassCache) {
       const cached = this.getCachedEnrichment(cacheKey);
       if (cached) {
@@ -144,7 +79,6 @@ export class GeminiService {
       }
     }
 
-    // 2. Check if Gemini credentials / adapter are available
     if (!this.adapter.isAvailable()) {
       logger.warn('Gemini client not configured. Loading deterministic fallback recommendations.', undefined, 'gemini-service');
       const fallback = this.recommendationService.getOfflineFallback(plan);
@@ -152,7 +86,6 @@ export class GeminiService {
       return fallback;
     }
 
-    // 3. Select versioned prompt
     const prompt = options?.isReplan
       ? buildReplanPrompt(plan, options.changesSummary)
       : buildEventPlannerPrompt(plan);
@@ -172,15 +105,11 @@ export class GeminiService {
     } catch (err: unknown) {
       logger.error('Gemini plan enrichment failed. Returning offline fallback template', err, undefined, 'gemini-service');
       const fallback = this.recommendationService.getOfflineFallback(plan);
-      // Cache fallback briefly (3 minutes) to prevent hammering during outages
       this.setCachedEnrichment(cacheKey, fallback, PLANNING_CONSTANTS.CACHE.TTL_MS - 3 * 60 * 1000);
       return fallback;
     }
   }
 
-  /**
-   * Executes grounded assistant Q&A strictly constrained to event plan context.
-   */
   public async generateAssistantReply(
     plan: ComputedPlan,
     message: string,
@@ -272,5 +201,4 @@ export class GeminiService {
   }
 }
 
-// Default exportable singleton instance
 export const geminiService = new GeminiService();

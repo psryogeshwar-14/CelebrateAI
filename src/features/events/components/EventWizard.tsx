@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, ArrowLeft, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, Check, AlertCircle } from 'lucide-react';
 import { useWizardForm } from '../hooks/useWizardForm';
+import { WizardNavigation } from './WizardNavigation';
 import { WizardStep1Basics } from './WizardStep1Basics';
 import { WizardStep2Scale } from './WizardStep2Scale';
 import { WizardStep3Style } from './WizardStep3Style';
@@ -41,9 +42,10 @@ export function EventWizard() {
     handleSubmit,
   } = useWizardForm();
 
+  const stepTitles = ['Core Details', 'Budget & Scale', 'Style & Customization'];
+
   return (
     <div className="max-w-3xl mx-auto py-6 sm:py-10 space-y-8">
-      {/* Top Header */}
       <div className="space-y-2">
         <Link
           href="/"
@@ -58,7 +60,7 @@ export function EventWizard() {
               Create Your Event Plan
             </h1>
             <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-              Step {currentStep} of 3: {currentStep === 1 ? 'Core Details' : currentStep === 2 ? 'Budget & Scale' : 'Style & Customization'}
+              Step {currentStep} of 3: {stepTitles[currentStep - 1]}
             </p>
           </div>
           <div
@@ -87,7 +89,6 @@ export function EventWizard() {
         </div>
       </div>
 
-      {/* Main Wizard Card */}
       <div className="rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 p-6 sm:p-8 shadow-xs">
         <form onSubmit={handleSubmit} className="space-y-8">
           {currentStep === 1 && (
@@ -131,7 +132,6 @@ export function EventWizard() {
             />
           )}
 
-          {/* Submission Error Banner */}
           {formErrors.submit && (
             <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-xs flex items-center space-x-2">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
@@ -139,51 +139,12 @@ export function EventWizard() {
             </div>
           )}
 
-          {/* Footer Navigation Buttons */}
-          <div className="flex items-center justify-between pt-4 border-t border-stone-100 dark:border-stone-800">
-            {currentStep > 1 ? (
-              <button
-                type="button"
-                onClick={handleBack}
-                disabled={isSubmitting}
-                className="px-5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 text-xs font-semibold hover:bg-stone-50 dark:hover:bg-stone-800 flex items-center space-x-1.5 transition-all"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Previous Step</span>
-              </button>
-            ) : (
-              <div />
-            )}
-
-            {currentStep < 3 ? (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-xs transition-all"
-              >
-                <span>Continue</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-7 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center space-x-2 shadow-sm shadow-amber-600/30 transition-all hover:scale-[1.02] disabled:opacity-50"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Computing Plan & Gemini AI Enrichment...</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-4 h-4" />
-                    <span>Generate Complete Event Plan</span>
-                  </>
-                )}
-              </button>
-            )}
-          </div>
+          <WizardNavigation
+            currentStep={currentStep}
+            isSubmitting={isSubmitting}
+            onBack={handleBack}
+            onNext={handleNext}
+          />
         </form>
       </div>
     </div>

@@ -54,6 +54,7 @@ export function logAuditEvent(entry: Omit<AuditLogEntry, 'timestamp'>): void {
   } else if (entry.status === 'rate_limited') {
     console.warn(logLine);
   } else {
+    // eslint-disable-next-line no-console
     console.log(logLine);
   }
 }
