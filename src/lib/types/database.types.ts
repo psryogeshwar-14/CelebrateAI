@@ -89,6 +89,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       budget_items: {
         Row: {
@@ -121,6 +122,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       timeline_tasks: {
         Row: {
@@ -165,6 +167,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       vendors: {
         Row: {
@@ -209,6 +212,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       ideas: {
         Row: {
@@ -232,7 +236,26 @@ export interface Database {
           content?: Json;
           created_at?: string;
         };
+        Relationships: [];
       };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      event_type_enum: EventTypeEnum;
+      event_status_enum: EventStatusEnum;
+      budget_category_enum: BudgetCategoryEnum;
+      task_status_enum: TaskStatusEnum;
+      task_priority_enum: TaskPriorityEnum;
+      vendor_status_enum: VendorStatusEnum;
+      idea_kind_enum: IdeaKindEnum;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
     };
   };
 }

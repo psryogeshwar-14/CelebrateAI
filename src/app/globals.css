@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #fafaf9; /* Stone-50 warm neutral */
+    --bg-card: #ffffff;
+    --text-main: #1c1917; /* Stone-900 ink */
+    --text-muted: #57534e; /* Stone-600 */
+    --border-subtle: #e7e5e4; /* Stone-200 */
+    --accent-saffron: #d97706; /* Amber-600 saffron gold */
+  }
+
+  .dark {
+    --bg-page: #0c0a09; /* Stone-950 deep ink */
+    --bg-card: #1c1917; /* Stone-900 warm ink */
+    --text-main: #f5f5f4; /* Stone-100 */
+    --text-muted: #a8a29e; /* Stone-400 */
+    --border-subtle: #292524; /* Stone-800 */
+    --accent-saffron: #f59e0b; /* Amber-500 saffron gold */
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Accessible focus visible rings */
+*:focus-visible {
+  outline: 2px solid #d97706;
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print-friendly styles */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+
+  header,
+  nav,
+  footer,
+  .no-print,
+  button,
+  .assistant-chat-pane,
+  .tab-controls {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #cccccc !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 12pt;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #000000 !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+}

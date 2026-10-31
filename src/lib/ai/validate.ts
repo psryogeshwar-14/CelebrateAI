@@ -178,7 +178,7 @@ export function validateAndMergeEnrichment(
     // Match exact or fuzzy category
     let matchedAlloc = validCategoriesMap.get(rawCat);
     if (!matchedAlloc) {
-      for (const [key, alloc] of validCategoriesMap.entries()) {
+      for (const [key, alloc] of Array.from(validCategoriesMap.entries())) {
         if (rawCat.includes(key) || key.includes(rawCat)) {
           matchedAlloc = alloc;
           break;
