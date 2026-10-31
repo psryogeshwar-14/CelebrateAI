@@ -60,3 +60,4 @@ Paste the following verified details into the Hack2skill submission form:
 - **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
 - **Technical Blog URL**: `https://dev.to/psryogeshwar14/how-i-built-celebrateai-a-grounded-genai-event-planner-with-gemini-and-google-cloud-run-1men`
 - **LinkedIn Post URL**: `https://lnkd.in/p/g3izSWtE`
+- **Demo Video URL**: `https://drive.google.com/file/d/1rC59tXJ56ULKFg4Dn1iWFVr-LvVtMRi4/view?usp=sharing`
