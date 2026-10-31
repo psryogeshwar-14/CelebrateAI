@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { EventPlanningInput } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 import { Sparkles, Loader2 } from 'lucide-react';
+import { Modal } from '@/shared/ui/Modal';
 
 interface ReplanModalProps {
   currentInput: EventPlanningInput;
@@ -32,33 +33,14 @@ export function ReplanModal({ currentInput, onClose, onReplan }: ReplanModalProp
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="replan-modal-title"
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title="Trigger Plan Recalibration"
+      description="Deterministic engine recomputes allocations & Gemini regenerates ideas based on updated parameters."
+      maxWidth="md"
     >
-      <div className="bg-white dark:bg-stone-900 rounded-2xl max-w-md w-full p-6 border border-stone-200 dark:border-stone-800 shadow-xl space-y-4">
-        <div className="flex items-center justify-between pb-2 border-b border-stone-100 dark:border-stone-800">
-          <div>
-            <h3 id="replan-modal-title" className="text-base font-bold text-stone-900 dark:text-stone-100 flex items-center space-x-1.5">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-              <span>Trigger Plan Recalibration</span>
-            </h3>
-            <p className="text-xs text-stone-500 dark:text-stone-400">
-              Deterministic engine recomputes allocations & Gemini regenerates ideas
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 font-bold p-1"
-            aria-label="Close modal"
-          >
-            ✕
-          </button>
-        </div>
-
+      <div className="space-y-4">
         {/* Total Budget */}
         <div className="space-y-1.5">
           <label htmlFor="replan-budget" className="block text-xs font-semibold uppercase text-stone-500 dark:text-stone-400">
@@ -114,7 +96,7 @@ export function ReplanModal({ currentInput, onClose, onReplan }: ReplanModalProp
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-xs font-semibold"
+            className="px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-xs font-semibold hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
           >
             Cancel
           </button>
@@ -122,7 +104,7 @@ export function ReplanModal({ currentInput, onClose, onReplan }: ReplanModalProp
             type="button"
             onClick={handleExecute}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center space-x-1.5"
+            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs transition-colors"
           >
             {isSubmitting ? (
               <>
@@ -138,6 +120,6 @@ export function ReplanModal({ currentInput, onClose, onReplan }: ReplanModalProp
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

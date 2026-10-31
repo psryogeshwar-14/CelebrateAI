@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-10-31
+
+### Added & Refactored (Injectable Gemini Adapter & Code Quality Polish: 98+)
+- **Injectable AI Adapter Architecture (`src/features/ai/`)**:
+  - `adapters/gemini-client.ts`: Created `GeminiClientAdapter` implementing `IGeminiClientAdapter` with configurable timeout race conditions, single-attempt transient retries (429/5xx), typed errors (`GeminiApiError`, `RateLimitError`), and secret-safe structured logging.
+  - `services/gemini.service.ts`: Created `GeminiService` orchestrating prompt selection, 10-minute deterministic in-memory caching, sliding-window rate limiting (10 req/min/IP), and multi-turn grounded assistant chat.
+  - `services/recommendation.service.ts`: Created `RecommendationService` for Zod post-response validation, phantom budget category rejection, percentage clamping (0–30%), server-calculated monetary savings, and date offset transformation.
+  - `prompts/`: Added versioned prompt constants (`EVENT_PLANNER_PROMPT_VERSION`, `REPLAN_PROMPT_VERSION`, `ASSISTANT_PROMPT_VERSION`) with `<untrusted_user_text>` encapsulation and immutable directive defense.
+  - `schemas/recommendation.schema.ts`: Added strict Google GenAI `responseSchema` with descriptions on every field alongside strict post-response Zod validation schemas.
+  - `services/gemini.service.test.ts`: Added 8 unit tests covering valid output, malformed JSON, semantically invalid output, timeout, rate limiting, transient retries, and prompt injection defense.
+- **Component & Modal Architecture**:
+  - Standardized `EditSpendModal`, `EditVendorModal`, and `ReplanModal` on the shared accessible `src/shared/ui/Modal.tsx`.
+  - Re-exported all feature components via clean public barrel APIs (`@/features/budget`, `@/features/timeline`, `@/features/vendors`, `@/features/ai`, `@/features/events`).
+- **Quality Gates**:
+  - **120 / 120 tests passing** across 19 test files.
+  - Added `npm run typecheck` script in `package.json`.
+  - Clean production build (15/15 static and dynamic routes compiled).
+
 ## [1.1.0] - 2026-10-31
 
 ### Changed & Refactored (Production Code Quality Overhaul: 88 -> 97+)

@@ -65,3 +65,4 @@ export function getOfflineFallbackEnrichment(plan: ComputedPlan): ValidatedEnric
 }
 
 export { sanitizeText };
+export * from '@/components/dashboard/AskCelebrateAIChat';

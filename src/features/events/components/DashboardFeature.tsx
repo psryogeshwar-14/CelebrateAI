@@ -4,16 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { CountdownCard } from '@/components/dashboard/CountdownCard';
-import { KpiCards } from '@/components/dashboard/KpiCards';
-import { BudgetDonutChart } from '@/components/dashboard/BudgetDonutChart';
-import { TimelineGanttView } from '@/components/dashboard/TimelineGanttView';
-import { VendorProgressCard } from '@/components/dashboard/VendorProgressCard';
-import { RunSheetTimeline } from '@/components/dashboard/RunSheetTimeline';
-import { AskCelebrateAIChat } from '@/components/dashboard/AskCelebrateAIChat';
-import { EditSpendModal } from '@/components/dashboard/EditSpendModal';
-import { EditVendorModal } from '@/components/dashboard/EditVendorModal';
-import { ReplanModal } from '@/components/dashboard/ReplanModal';
+import { CountdownCard, KpiCards, ReplanModal } from '@/features/events';
+import { BudgetDonutChart, EditSpendModal } from '@/features/budget';
+import { TimelineGanttView, RunSheetTimeline } from '@/features/timeline';
+import { VendorProgressCard, EditVendorModal } from '@/features/vendors';
+import { AskCelebrateAIChat } from '@/features/ai';
 import { VendorRecommendation } from '@/lib/engine/types';
 import {
   Palette,

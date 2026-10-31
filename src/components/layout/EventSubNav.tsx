@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCelebrate } from '@/lib/context/celebrate-context';
-import { ReplanModal } from '@/components/dashboard/ReplanModal';
+import { ReplanModal } from '@/features/events';
 import {
   LayoutDashboard,
   Wallet,

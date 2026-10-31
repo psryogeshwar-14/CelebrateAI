@@ -7,10 +7,10 @@
 [![CI Status](https://github.com/psryogeshwar-14/CelebrateAI/actions/workflows/ci.yml/badge.svg)](https://github.com/psryogeshwar-14/CelebrateAI/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
-[![Code Quality](https://img.shields.io/badge/Code%20Quality-97%2B-brightgreen)](./CODE_QUALITY.md)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-98%2B-brightgreen)](./CODE_QUALITY.md)
 [![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
 [![Google Cloud Run](https://img.shields.io/badge/Cloud%20Run-asia--south1-4285F4?logo=googlecloud&logoColor=white)](https://cloud.google.com/run)
-[![Tests](https://img.shields.io/badge/Tests-112%20passed-brightgreen)](https://vitest.dev/)
+[![Tests](https://img.shields.io/badge/Tests-120%20passed-brightgreen)](https://vitest.dev/)
 
 ---
 
@@ -256,18 +256,17 @@ gcloud run deploy celebrateai \
 
 ---
 
-## 📂 Repository File Structure
+## 📂 Repository File Structure (Feature-Sliced App Router)
 
 ```
 celebrate-ai/
 ├── .github/workflows/ci.yml         # GitHub Actions CI (Lint, Typecheck, Test, Build)
-├── docs/
-│   └── media/                       # Vector UI previews and diagrams
+├── docs/                            # Documentation assets and walkthroughs
 ├── scripts/
 │   ├── deploy-cloud-run.sh          # One-click Cloud Run deployment script
 │   └── setup-secrets.sh             # Secret Manager provisioning script
 ├── src/
-│   ├── app/
+│   ├── app/                         # Ultra-thin Server Component routes (<15 lines)
 │   │   ├── api/
 │   │   │   ├── assistant/route.ts   # Grounded Ask CelebrateAI assistant endpoint
 │   │   │   ├── health/route.ts      # Cloud Run healthcheck endpoint (GET /api/health)
@@ -285,21 +284,30 @@ celebrate-ai/
 │   │   ├── global-error.tsx         # Global server error fallback
 │   │   ├── not-found.tsx            # Branded 404 page
 │   │   └── page.tsx                 # Landing page with demo triggers
-│   ├── components/
-│   │   ├── dashboard/               # Donut chart, KPI cards, modals, Gantt view
-│   │   └── layout/                  # Navbar, EventSubNav, Footer
-│   ├── lib/
-│   │   ├── ai/                      # Gemini client, prompt templates, Zod validation
-│   │   ├── engine/                  # Deterministic budget, timeline, vendor, feasibility
-│   │   ├── logging/                 # Structured audit logger with IP masking
-│   │   ├── repositories/            # Supabase Postgres data access layer
-│   │   ├── security/                # Security tests and rate limiter
-│   │   ├── services/                # Business domain service layer
-│   │   ├── supabase/                # Supabase client, server, admin, RLS tests
-│   │   └── utils/                   # Deterministic math, INR formatting, date utils
-│   └── middleware.ts                # Edge size limiting, CSRF check, security headers
+│   ├── features/                    # Feature-sliced domain modules
+│   │   ├── events/                  # Wizard, Landing, DashboardFeature, ExportFeature
+│   │   ├── budget/                  # BudgetFeature, DonutChart, SpendModal, BudgetTable
+│   │   ├── timeline/                # TimelineFeature, GanttView, MilestoneCard, Modal
+│   │   ├── vendors/                 # VendorsFeature, VendorCard, VendorProgressCard
+│   │   └── ai/                      # Injectable GeminiClientAdapter, GeminiService, RecommendationService
+│   ├── server/                      # Server-only isolation layer
+│   │   ├── ai/                      # Server AI adapter facade
+│   │   ├── db/                      # Supabase server, admin, and client factories
+│   │   ├── repositories/            # Supabase Postgres CRUD repositories
+│   │   └── services/                # Server persistence services
+│   ├── shared/                      # Domain-agnostic reusable foundation
+│   │   ├── config/                  # Centralized PLANNING_CONSTANTS
+│   │   ├── lib/                     # Typed error hierarchy & structured JSON logger
+│   │   ├── types/                   # Common discriminated union types
+│   │   └── ui/                      # Accessible Modal, Card, Badge primitives
+│   ├── lib/                         # Pure deterministic calculation engine
+│   │   ├── engine/                  # Pure math: budget.ts, timeline.ts, vendors.ts, feasibility.ts
+│   │   └── utils/                   # deterministic.ts (formatINR, formatDateISO, Hamilton-Hare)
+│   └── middleware.ts                # Edge size limiting (512KB), CSRF check, security headers
 ├── Dockerfile                       # Node 20 Alpine multi-stage standalone runner
 ├── ARCHITECTURE.md                  # Comprehensive architectural specification
+├── CODE_QUALITY.md                  # Code quality decisions and refactoring report
+├── CODE_QUALITY_AUDIT.md            # Final pre-submission audit report
 ├── PROMPTS.md                       # Complete Gemini prompt engineering rationale
 ├── CHANGELOG.md                     # Semantic version history
 └── README.md                        # Project documentation & setup guide

@@ -6,3 +6,5 @@ export * from './components/TimelineKpiCards';
 export * from './components/TimelineFilterBar';
 export * from './components/MilestoneCard';
 export * from './components/CreateMilestoneModal';
+export * from '@/components/dashboard/TimelineGanttView';
+export * from '@/components/dashboard/RunSheetTimeline';

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { VendorRecommendation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
+import { Modal } from '@/shared/ui/Modal';
 
 interface EditVendorModalProps {
   vendor: VendorRecommendation;
@@ -38,32 +39,14 @@ export function EditVendorModal({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="edit-vendor-title"
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      title={`Update Vendor: ${vendor.vendorType}`}
+      description={`Booking Deadline: ${vendor.bookingDeadline}`}
+      maxWidth="md"
     >
-      <div className="bg-white dark:bg-stone-900 rounded-2xl max-w-md w-full p-6 border border-stone-200 dark:border-stone-800 shadow-xl space-y-4">
-        <div className="flex items-center justify-between pb-2 border-b border-stone-100 dark:border-stone-800">
-          <div>
-            <h3 id="edit-vendor-title" className="text-base font-bold text-stone-900 dark:text-stone-100">
-              Update Vendor: {vendor.vendorType}
-            </h3>
-            <p className="text-xs text-stone-500 dark:text-stone-400">
-              Booking Deadline: {vendor.bookingDeadline}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 font-bold p-1"
-            aria-label="Close modal"
-          >
-            ✕
-          </button>
-        </div>
-
+      <div className="space-y-4">
         {/* Status Dropdown */}
         <div className="space-y-1.5">
           <label htmlFor="vendor-status" className="block text-xs font-semibold uppercase text-stone-500 dark:text-stone-400">
@@ -113,7 +96,7 @@ export function EditVendorModal({
             rows={2}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="e.g. Spoke with Arjun, agreed on 50% advance check due next week..."
+            placeholder="e.g. Spoke with vendor, agreed on 50% advance check due next week..."
             className="w-full px-3 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs"
           />
         </div>
@@ -122,19 +105,19 @@ export function EditVendorModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-xs font-semibold"
+            className="px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-xs font-semibold hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleSave}
-            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold"
+            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-xs transition-colors"
           >
             Save Vendor
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

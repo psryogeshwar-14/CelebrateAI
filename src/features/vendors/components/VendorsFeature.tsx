@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { EditVendorModal } from '@/components/dashboard/EditVendorModal';
+import { EditVendorModal } from '@/features/vendors';
 import { VendorRecommendation } from '@/lib/engine/types';
 import { Search } from 'lucide-react';
 import { VendorKpiCards } from './VendorKpiCards';

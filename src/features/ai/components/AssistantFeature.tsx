@@ -3,7 +3,7 @@
 import React from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { AskCelebrateAIChat } from '@/components/dashboard/AskCelebrateAIChat';
+import { AskCelebrateAIChat } from '@/features/ai';
 import { formatINR } from '@/lib/utils/deterministic';
 import {
   ShieldCheck,

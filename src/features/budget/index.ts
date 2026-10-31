@@ -6,3 +6,5 @@ export * from './components/BudgetKpiCards';
 export * from './components/BudgetTable';
 export * from './components/SavingsTipsCard';
 export * from './components/BudgetHealthBadge';
+export * from '@/components/dashboard/BudgetDonutChart';
+export * from '@/components/dashboard/EditSpendModal';

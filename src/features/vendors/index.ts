@@ -5,3 +5,5 @@ export * from './components/VendorsFeature';
 export * from './components/VendorCard';
 export * from './components/VendorKpiCards';
 export * from './components/VendorQuestionsAccordion';
+export * from '@/components/dashboard/VendorProgressCard';
+export * from '@/components/dashboard/EditVendorModal';

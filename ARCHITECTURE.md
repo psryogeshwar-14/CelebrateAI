@@ -128,12 +128,24 @@ All numerical and calendar facts are single-source-of-truth mathematical calcula
   5. `missing_accessibility`: Missing ramps/seating when elderly or disabled guests attend.
   6. `outdoor_weather_risk`: Outdoor event without rain buffer contingency.
 
-### 2. GenAI Integration & Grounding Rules
-- **Server-Side Only**: Gemini calls are executed strictly in server-side API routes via `@google/genai`. Zero browser exposure.
-- **Strict JSON Schema**: Structured outputs are enforced with `responseMimeType: 'application/json'` and strict JSON schemas.
-- **Zod Post-Validation**: Every Gemini response is parsed and sanitized through Zod schemas before returning to clients.
-- **Zero Hallucination Boundary**: Gemini is never asked to compute budgets, dates, or vendor deadlines. The AI is fed the locked deterministic numbers in prompt context and instructed never to contradict them.
-- **Fault-Tolerant Resilience**: In-memory 10-minute cache with automatic retry on 429/5xx, and instantaneous fallback to rich cultural templates when offline.
+### 2. GenAI Integration & Grounding Rules (`src/features/ai/`)
+- **Server-Side Only**: Gemini calls are executed strictly in server-side API routes via `@google/genai`. Zero browser credential exposure.
+- **Injectable AI Adapter (`GeminiClientAdapter`)**: Owns SDK execution with configurable timeout race conditions, automatic single-attempt transient retry on 429/5xx, typed `GeminiApiError`/`RateLimitError` exceptions, and secret-safe structured logging. Accepts mock clients for isolated unit testing.
+- **Orchestration Service (`GeminiService`)**: Manages 10-minute in-memory caching keyed on deterministic plan hashes (`createPlanCacheKey`), sliding-window rate limiting (10 req/min/IP), and multi-turn grounded assistant conversations.
+- **Recommendation Service (`RecommendationService`)**:
+  - Validates completions with Zod post-response schemas.
+  - **Rejects phantom budget categories** that do not exist in the computed budget.
+  - **Clamps savings percentages** to realistic `[0, 30]%` bounds.
+  - **Computes exact monetary savings on the server** (`Math.round(alloc.amount * pct / 100)`). The LLM is never trusted with monetary arithmetic.
+  - **Transforms day offsets** into deterministic calendar dates (`addDaysFormatted(eventDate, -offset)`).
+  - Sanitizes and HTML-escapes all strings against XSS.
+- **Versioned Grounded Prompts**:
+  - `EVENT_PLANNER_PROMPT_VERSION = 'v1.2.0'`
+  - `REPLAN_PROMPT_VERSION = 'v1.2.0'`
+  - `ASSISTANT_PROMPT_VERSION = 'v1.2.0'`
+  - User text encapsulated inside `<untrusted_user_text>` passive tags with immutable mathematical directives.
+- **Strict JSON Schema**: Structured outputs are enforced with `responseMimeType: 'application/json'` and strict `responseSchema` specifications.
+- **Fault-Tolerant Resilience**: Automatic fallback to rich cultural Bengaluru templates (Weddings, Birthdays, Community events) when Gemini is unconfigured, throttled, or offline.
 
 ---
 

@@ -13,3 +13,6 @@ export * from './components/WizardStep2Scale';
 export * from './components/WizardStep3Style';
 export * from './components/DashboardFeature';
 export * from './components/ExportFeature';
+export * from '@/components/dashboard/CountdownCard';
+export * from '@/components/dashboard/KpiCards';
+export * from '@/components/dashboard/ReplanModal';

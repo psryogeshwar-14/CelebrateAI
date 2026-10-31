@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { TimelineGanttView } from '@/components/dashboard/TimelineGanttView';
+import { TimelineGanttView } from '@/features/timeline';
 import { TimelineMilestone } from '@/lib/engine/types';
 import { TimelineKpiCards } from './TimelineKpiCards';
 import { TimelineFilterBar } from './TimelineFilterBar';

@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { BudgetDonutChart } from '@/components/dashboard/BudgetDonutChart';
-import { EditSpendModal } from '@/components/dashboard/EditSpendModal';
+import { BudgetDonutChart, EditSpendModal } from '@/features/budget';
 import { BudgetKpiCards } from './BudgetKpiCards';
 import { BudgetTable } from './BudgetTable';
 import { SavingsTipsCard } from './SavingsTipsCard';

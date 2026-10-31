@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ComputedPlan } from '../engine/types';
+import { logger } from '@/shared/lib/logger';
 import { addDaysFormatted, clamp } from '../utils/deterministic';
 
 // ----------------------------------------------------------------------------
@@ -137,7 +138,7 @@ export function validateAndMergeEnrichment(
 ): ValidatedEnrichmentOutput {
   const validation = rawPlanEnrichmentZodSchema.safeParse(rawJson);
   if (!validation.success) {
-    console.warn('[AI Validation] Malformed Gemini response rejected. Falling back to offline templates.');
+    logger.warn('Malformed Gemini response rejected. Falling back to offline templates.', undefined, 'ai-validate');
     return getOfflineFallbackEnrichment(plan);
   }
   const parsed = validation.data;

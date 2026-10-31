@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
-import { RunSheetTimeline } from '@/components/dashboard/RunSheetTimeline';
+import { RunSheetTimeline } from '@/features/timeline';
 import { Palette, Utensils, ShieldAlert, Clock } from 'lucide-react';
 import { ThemeCard } from './ThemeCard';
 import { BanquetMenuSection } from './BanquetMenuSection';
