@@ -39,8 +39,8 @@ The computed mathematical plan is locked in XML and passed as immutable context.
 📸 *Swipe through the screenshots below to see the interactive dashboard, tonal amber budget donut chart, Gantt timeline, and grounded assistant in action!*
 
 🔗 **Try the live app**: https://celebrateai-placeholder-el.a.run.app
-⭐ **GitHub Repository**: https://github.com/your-username/celebrate-ai
-📝 **Read the full technical deep dive**: https://github.com/your-username/celebrate-ai/blob/main/TECHNICAL_BLOG.md
+⭐ **GitHub Repository**: https://github.com/psryogeshwar-14/CelebrateAI
+📝 **Read the full technical deep dive**: https://github.com/psryogeshwar-14/CelebrateAI/blob/main/TECHNICAL_BLOG.md
 
 Huge shoutout to Google for Developers (@Google for Developers) and Hack2skill (@Hack2skill) for hosting this challenge!
 

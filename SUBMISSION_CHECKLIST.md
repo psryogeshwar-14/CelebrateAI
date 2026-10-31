@@ -9,7 +9,7 @@ Use this checklist to verify all requirements before submitting your entry to th
 | # | Item | Status | Verification Details |
 |:---:|---|:---:|---|
 | 1 | **Public Cloud Run URL Works** | ⏳ *Pending User Deploy* | Service configured for `asia-south1` with `GET /api/health` returning `{"status":"ok"}`. URL format: `https://celebrateai-[HASH]-el.a.run.app`. |
-| 2 | **GitHub Repository is Public** | ⏳ *Action Required* | Ensure the GitHub repository visibility is set to **Public** at `https://github.com/your-username/celebrate-ai` so judges can inspect the source code and CI runs. |
+| 2 | **GitHub Repository is Public** | ⏳ *Action Required* | Ensure the GitHub repository visibility is set to **Public** at `https://github.com/psryogeshwar-14/CelebrateAI` so judges can inspect the source code and CI runs. |
 | 3 | **README Complete** | ✅ **Verified** | [`README.md`](./README.md) contains pitch, problem statement, architecture diagram, deterministic vs pure chatbot comparison, prompt design, security, a11y, testing, Cloud Run deployment guide, demo data, and roadmap. |
 | 4 | **Demo Data Available** | ✅ **Verified** | 3 pre-seeded Bangalore demo events (Wedding at Palace Grounds, Cyberpunk 30th Birthday, HSR Layout Sustainability Fair) load directly from the landing page with **zero authentication required**. |
 | 5 | **Gemini Integration Works** | ✅ **Verified** | Server-side Gemini 3.8 Flash integration via `@google/genai` produces structured JSON themes, regional dietary menus, and risk mitigations, with graceful fallback to offline cultural templates if unconfigured or rate-limited. |
@@ -35,7 +35,7 @@ Note the deployed URL: `https://celebrateai-[HASH]-el.a.run.app`.
 
 ### Step 2: Push to Public GitHub Repository
 ```bash
-git remote add origin https://github.com/your-username/celebrate-ai.git
+git remote add origin https://github.com/psryogeshwar-14/CelebrateAI.git
 git branch -M main
 git push -u origin main
 ```
@@ -57,6 +57,6 @@ Verify under **Settings $\to$ General $\to$ Danger Zone** that the repository vi
 Paste the following verified details into the Hack2skill submission form:
 - **Project Name**: CelebrateAI
 - **Live Cloud Run URL**: `https://celebrateai-[HASH]-el.a.run.app`
-- **GitHub Repository**: `https://github.com/your-username/celebrate-ai`
+- **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
 - **Technical Blog URL**: `[YOUR_PUBLISHED_BLOG_URL]`
 - **LinkedIn Post URL**: `[YOUR_LINKEDIN_POST_URL]`

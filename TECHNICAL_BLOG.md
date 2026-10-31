@@ -163,5 +163,5 @@ By constraining generative models to what they do best—synthesis, cultural nua
 ## 12. Live Demo & Links
 
 - **Live Application**: [https://celebrateai-placeholder-el.a.run.app](https://celebrateai-placeholder-el.a.run.app)
-- **GitHub Repository**: [https://github.com/your-username/celebrate-ai](https://github.com/your-username/celebrate-ai)
+- **GitHub Repository**: [https://github.com/psryogeshwar-14/CelebrateAI](https://github.com/psryogeshwar-14/CelebrateAI)
 - **Health Endpoint**: [https://celebrateai-placeholder-el.a.run.app/api/health](https://celebrateai-placeholder-el.a.run.app/api/health)

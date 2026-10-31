@@ -4,7 +4,7 @@
 > **“Plan every celebration with clarity, not chaos.”**  
 > CelebrateAI turns your event brief into a budget that adds up, a timeline that works backwards from the big day, and a vendor checklist you can actually follow.
 
-[![CI Status](https://github.com/your-username/celebrate-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/celebrate-ai/actions)
+[![CI Status](https://github.com/psryogeshwar-14/CelebrateAI/actions/workflows/ci.yml/badge.svg)](https://github.com/psryogeshwar-14/CelebrateAI/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
 [![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
@@ -18,7 +18,7 @@
 - **Live Application URL**: `https://celebrateai-placeholder-el.a.run.app` *(or your deployed Cloud Run service URL)*
 - **Local Development URL**: `http://localhost:3000`
 - **Health Check Endpoint**: `https://celebrateai-placeholder-el.a.run.app/api/health`
-- **GitHub Repository**: `https://github.com/your-username/celebrate-ai`
+- **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
 
 ---
 
