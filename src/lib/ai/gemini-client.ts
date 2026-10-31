@@ -139,7 +139,7 @@ export async function generatePlanEnrichment(
     try {
       const response = await withTimeout(
         aiClient.models.generateContent({
-          model: 'gemini-3.8-flash',
+          model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
@@ -232,7 +232,7 @@ export async function generateGroundedAssistantReply(
   try {
     const response = await withTimeout(
       aiClient.models.generateContent({
-        model: 'gemini-3.8-flash',
+        model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
         contents,
         config: {
           systemInstruction,
