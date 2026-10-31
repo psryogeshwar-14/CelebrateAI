@@ -68,7 +68,7 @@ else
 fi
 
 # Grant Cloud Run default service account permission to read secrets
-PROJECT_NUMBER=$(gcloud projects describe "${PROJECT_ID}" --format="value(projectNumber)")
+PROJECT_NUMBER=$(gcloud projects describe "${PROJECT_ID}" --format="value(projectNumber)" 2>/dev/null || echo "${PROJECT_ID}")
 CLOUD_RUN_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 
 echo "==> Granting Secret Accessor role to Cloud Run Service Account: ${CLOUD_RUN_SA}..."
