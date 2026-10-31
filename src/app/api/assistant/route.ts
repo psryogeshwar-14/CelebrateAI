@@ -2,30 +2,45 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { generateGroundedAssistantReply, checkRateLimit } from '@/lib/ai/gemini-client';
 import { ComputedPlan } from '@/lib/engine/types';
+import { logAuditEvent } from '@/lib/logging/audit';
+import { sanitizeText } from '@/lib/ai/validate';
 
-const chatMessageZodSchema = z.object({
-  role: z.enum(['user', 'assistant']),
-  content: z.string().min(1).max(2000),
-});
+const chatMessageZodSchema = z
+  .object({
+    role: z.enum(['user', 'assistant']),
+    content: z.string().min(1).max(2000),
+  })
+  .strict();
 
-const assistantRequestZodSchema = z.object({
-  plan: z.custom<ComputedPlan>((val) => val && typeof val === 'object' && 'input' in val && 'budget' in val),
-  message: z.string().min(1, 'Message cannot be empty').max(1000),
-  history: z.array(chatMessageZodSchema).optional().default([]),
-});
+const assistantRequestZodSchema = z
+  .object({
+    plan: z.custom<ComputedPlan>((val) => val && typeof val === 'object' && 'input' in val && 'budget' in val),
+    message: z.string().min(1, 'Message cannot be empty').max(1000),
+    history: z.array(chatMessageZodSchema).optional().default([]),
+  })
+  .strict();
 
 export async function POST(req: NextRequest) {
-  try {
-    const clientIp =
-      req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-      req.headers.get('x-real-ip') ||
-      'anonymous-client';
+  const startTime = Date.now();
+  const clientIp =
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+    req.headers.get('x-real-ip') ||
+    'anonymous-client';
 
+  try {
     const rateLimit = checkRateLimit(clientIp);
     if (!rateLimit.allowed) {
+      logAuditEvent({
+        action: 'rate_limit_exceeded',
+        ip: clientIp,
+        status: 'rate_limited',
+        reason: 'Exceeded 10 requests per minute limit on /api/assistant',
+      });
+
       return NextResponse.json(
         {
-          error: 'Rate limit exceeded: Maximum 10 assistant interactions per minute.',
+          error: 'Too Many Requests',
+          message: 'Rate limit exceeded: Maximum 10 assistant queries per minute. Please try again later.',
           retryAfterSec: rateLimit.retryAfterSec,
         },
         {
@@ -37,13 +52,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
+    let body: any;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        {
+          error: 'Bad Request',
+          message: 'Malformed JSON payload.',
+        },
+        { status: 400 }
+      );
+    }
+
     const validation = assistantRequestZodSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(
         {
-          error: 'Validation failed for assistant request',
+          error: 'Validation failed',
+          message: 'Validation failed for assistant request payload.',
           issues: validation.error.flatten().fieldErrors,
         },
         { status: 400 }
@@ -51,8 +79,22 @@ export async function POST(req: NextRequest) {
     }
 
     const { plan, message, history } = validation.data;
+    const sanitizedMessage = sanitizeText(message);
+    const sanitizedHistory = history.map((h) => ({
+      role: h.role,
+      content: sanitizeText(h.content),
+    }));
 
-    const reply = await generateGroundedAssistantReply(plan, message, history);
+    const reply = await generateGroundedAssistantReply(plan, sanitizedMessage, sanitizedHistory);
+
+    const durationMs = Date.now() - startTime;
+    logAuditEvent({
+      action: 'assistant_chat',
+      ip: clientIp,
+      status: 'success',
+      durationMs,
+      eventType: plan.input.eventType,
+    });
 
     return NextResponse.json(
       {
@@ -65,11 +107,21 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error('Unhandled error in /api/assistant:', error);
+    const durationMs = Date.now() - startTime;
+    logAuditEvent({
+      action: 'assistant_chat',
+      ip: clientIp,
+      status: 'failed',
+      durationMs,
+      reason: error?.message || 'Assistant failure',
+    });
+
+    console.error('[API /api/assistant] Internal exception:', error);
+
     return NextResponse.json(
       {
-        error: 'Internal server error while processing assistant query',
-        message: error?.message || 'Unknown error',
+        error: 'Internal Server Error',
+        message: 'An unexpected error occurred while consulting the assistant. Please try again.',
       },
       { status: 500 }
     );

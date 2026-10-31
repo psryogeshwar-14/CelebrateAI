@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="dbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fafaf9" />
+      <stop offset="100%" stop-color="#f5f5f4" />
+    </linearGradient>
+    <linearGradient id="amberAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#dbBg)" />
+
+  <!-- Navbar -->
+  <rect x="0" y="0" width="1200" height="60" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+  <text x="40" y="38" font-family="-apple-system, sans-serif" font-weight="900" font-size="18" fill="#1c1917">Celebrate<tspan fill="#d97706">AI</tspan></text>
+  <text x="400" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#d97706">Overview</text>
+  <text x="490" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Budget</text>
+  <text x="560" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Timeline</text>
+  <text x="640" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Vendors</text>
+  <text x="720" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Ideas</text>
+  <text x="780" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Assistant</text>
+  <text x="860" y="36" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#78716c">Export</text>
+
+  <!-- Title bar -->
+  <text x="40" y="105" font-family="-apple-system, sans-serif" font-weight="900" font-size="24" fill="#1c1917">Ananya &amp; Vikram's Heritage Wedding</text>
+  <text x="40" y="130" font-family="-apple-system, sans-serif" font-size="13" fill="#78716c">📍 Bengaluru • 📅 2026-11-28 • 👥 350 Guests</text>
+
+  <rect x="980" y="85" width="180" height="36" rx="10" fill="url(#amberAccent)" />
+  <text x="1070" y="108" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Share &amp; Export Brief</text>
+
+  <!-- Countdown Card -->
+  <rect x="40" y="150" width="1120" height="85" rx="16" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+  <text x="65" y="185" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#d97706">COUNTDOWN TO BIG DAY</text>
+  <text x="65" y="215" font-family="-apple-system, sans-serif" font-size="20" font-weight="900" fill="#1c1917">November 28, 2026</text>
+  <g transform="translate(780, 165)">
+    <rect width="65" height="55" rx="8" fill="#f5f5f4" />
+    <text x="32" y="34" font-family="monospace" font-size="20" font-weight="800" text-anchor="middle" fill="#1c1917">211</text>
+    <text x="32" y="48" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle" fill="#78716c">DAYS</text>
+
+    <rect x="75" width="65" height="55" rx="8" fill="#f5f5f4" />
+    <text x="107" y="34" font-family="monospace" font-size="20" font-weight="800" text-anchor="middle" fill="#1c1917">14</text>
+    <text x="107" y="48" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle" fill="#78716c">HOURS</text>
+
+    <rect x="150" width="65" height="55" rx="8" fill="#f5f5f4" />
+    <text x="182" y="34" font-family="monospace" font-size="20" font-weight="800" text-anchor="middle" fill="#1c1917">32</text>
+    <text x="182" y="48" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle" fill="#78716c">MINS</text>
+
+    <rect x="225" width="65" height="55" rx="8" fill="#fef3c7" stroke="#fde68a" stroke-width="1" />
+    <text x="257" y="34" font-family="monospace" font-size="20" font-weight="800" text-anchor="middle" fill="#b45309">48</text>
+    <text x="257" y="48" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle" fill="#b45309">SECS</text>
+  </g>
+
+  <!-- 4 KPI Cards -->
+  <g transform="translate(40, 250)">
+    <!-- KPI 1 -->
+    <rect width="265" height="100" rx="14" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="20" y="32" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#78716c">TOTAL BUDGET</text>
+    <text x="20" y="65" font-family="monospace" font-size="24" font-weight="900" fill="#1c1917">₹25,00,000</text>
+    <text x="20" y="85" font-family="-apple-system, sans-serif" font-size="11" fill="#16a34a">✓ 100% Deterministic allocation</text>
+
+    <!-- KPI 2 -->
+    <rect x="285" width="265" height="100" rx="14" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="305" y="32" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#78716c">ACTUAL COMMITTED</text>
+    <text x="305" y="65" font-family="monospace" font-size="24" font-weight="900" fill="#1c1917">₹9,45,000</text>
+    <text x="305" y="85" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">38% committed across 4 vendors</text>
+
+    <!-- KPI 3 -->
+    <rect x="570" width="265" height="100" rx="14" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="590" y="32" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#78716c">TASKS COMPLETED</text>
+    <text x="590" y="65" font-family="monospace" font-size="24" font-weight="900" fill="#16a34a">3 <tspan font-size="14" fill="#78716c">/ 21</tspan></text>
+    <text x="590" y="85" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">18 upcoming milestones on track</text>
+
+    <!-- KPI 4 -->
+    <rect x="855" width="265" height="100" rx="14" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="875" y="32" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#78716c">BUDGET HEALTH</text>
+    <text x="875" y="65" font-family="-apple-system, sans-serif" font-size="22" font-weight="900" fill="#16a34a">Healthy</text>
+    <text x="875" y="85" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">₹2,50,000 (10%) contingency intact</text>
+  </g>
+
+  <!-- Lower Split: Donut Chart + Milestones -->
+  <!-- Donut Chart Card -->
+  <g transform="translate(40, 365)">
+    <rect width="550" height="280" rx="16" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="24" y="32" font-family="-apple-system, sans-serif" font-size="14" font-weight="800" fill="#1c1917">Tonal Amber Budget Allocation</text>
+    <text x="24" y="50" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">Exact Hamilton-Hare split across 10 categories</text>
+
+    <!-- Donut SVG Mockup -->
+    <circle cx="140" cy="160" r="70" fill="none" stroke="#f59e0b" stroke-width="28" stroke-dasharray="140 300" />
+    <circle cx="140" cy="160" r="70" fill="none" stroke="#d97706" stroke-width="28" stroke-dasharray="100 340" stroke-dashoffset="-140" />
+    <circle cx="140" cy="160" r="70" fill="none" stroke="#b45309" stroke-width="28" stroke-dasharray="60 380" stroke-dashoffset="-240" />
+    <circle cx="140" cy="160" r="70" fill="none" stroke="#78716c" stroke-width="28" stroke-dasharray="44 396" stroke-dashoffset="-300" />
+    <text x="140" y="157" font-family="monospace" font-size="13" font-weight="800" text-anchor="middle" fill="#1c1917">₹25.0L</text>
+    <text x="140" y="172" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle" fill="#78716c">100%</text>
+
+    <!-- Legend -->
+    <g transform="translate(280, 80)">
+      <circle cx="10" cy="15" r="5" fill="#f59e0b" />
+      <text x="25" y="19" font-family="-apple-system, sans-serif" font-size="12" fill="#1c1917">Catering Feast (28%)</text>
+      <text x="230" y="19" font-family="monospace" font-size="12" fill="#78716c">₹7,00,000</text>
+
+      <circle cx="10" cy="40" r="5" fill="#d97706" />
+      <text x="25" y="44" font-family="-apple-system, sans-serif" font-size="12" fill="#1c1917">Venue &amp; Hall (22%)</text>
+      <text x="230" y="44" font-family="monospace" font-size="12" fill="#78716c">₹5,50,000</text>
+
+      <circle cx="10" cy="65" r="5" fill="#b45309" />
+      <text x="25" y="69" font-family="-apple-system, sans-serif" font-size="12" fill="#1c1917">Mandap &amp; Floral Decor (14%)</text>
+      <text x="230" y="69" font-family="monospace" font-size="12" fill="#78716c">₹3,50,000</text>
+
+      <circle cx="10" cy="90" r="5" fill="#92400e" />
+      <text x="25" y="94" font-family="-apple-system, sans-serif" font-size="12" fill="#1c1917">Traditional Photography (9%)</text>
+      <text x="230" y="94" font-family="monospace" font-size="12" fill="#78716c">₹2,25,000</text>
+
+      <circle cx="10" cy="115" r="5" fill="#78716c" />
+      <text x="25" y="119" font-family="-apple-system, sans-serif" font-size="12" fill="#1c1917">Contingency Reserve (10%)</text>
+      <text x="230" y="119" font-family="monospace" font-size="12" fill="#78716c">₹2,50,000</text>
+    </g>
+  </g>
+
+  <!-- Milestones Preview Card -->
+  <g transform="translate(610, 365)">
+    <rect width="550" height="280" rx="16" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <text x="24" y="32" font-family="-apple-system, sans-serif" font-size="14" font-weight="800" fill="#1c1917">Upcoming Back-Scheduled Milestones</text>
+    <text x="24" y="50" font-family="-apple-system, sans-serif" font-size="11" fill="#78716c">Chronological order scheduled backwards from event day</text>
+
+    <!-- Task item 1 -->
+    <rect x="20" y="70" width="510" height="50" rx="10" fill="#f5f5f4" />
+    <circle cx="45" cy="95" r="8" fill="#16a34a" />
+    <text x="45" y="99" font-size="10" fill="#ffffff" text-anchor="middle">✓</text>
+    <text x="65" y="92" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#78716c" text-decoration="line-through">Finalize Guest List &amp; Budget Allocations</text>
+    <text x="65" y="108" font-family="-apple-system, sans-serif" font-size="10" fill="#a8a29e">Owner: host • Due: 2026-05-10</text>
+    <rect x="440" y="82" width="75" height="24" rx="6" fill="#dcfce7" />
+    <text x="477" y="98" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#166534" text-anchor="middle">DONE</text>
+
+    <!-- Task item 2 -->
+    <rect x="20" y="130" width="510" height="50" rx="10" fill="#fef2f2" stroke="#fecaca" stroke-width="1" />
+    <circle cx="45" cy="155" r="8" fill="#ef4444" />
+    <text x="65" y="152" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#991b1b">Lock Palace Grounds Venue Contract</text>
+    <text x="65" y="168" font-family="-apple-system, sans-serif" font-size="10" fill="#b91c1c">Owner: family • Due: 2026-06-01 (T-180d)</text>
+    <rect x="440" y="142" width="75" height="24" rx="6" fill="#fee2e2" />
+    <text x="477" y="158" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#991b1b" text-anchor="middle">DO NOW</text>
+
+    <!-- Task item 3 -->
+    <rect x="20" y="190" width="510" height="50" rx="10" fill="#ffffff" stroke="#e7e5e4" stroke-width="1" />
+    <circle cx="45" cy="215" r="8" fill="#e7e5e4" />
+    <text x="65" y="212" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#1c1917">Book Traditional Udupi Caterer</text>
+    <text x="65" y="228" font-family="-apple-system, sans-serif" font-size="10" fill="#78716c">Owner: host • Due: 2026-07-15 (T-136d)</text>
+    <rect x="440" y="202" width="75" height="24" rx="6" fill="#f5f5f4" />
+    <text x="477" y="218" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#78716c" text-anchor="middle">TODO</text>
+  </g>
+</svg>

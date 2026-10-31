@@ -1,82 +1,97 @@
 # CelebrateAI 🎉
 **GenAI-Powered Celebration & Event Planner for PromptWars Virtual Challenge 5**
 
-> **“Plan every celebration with clarity, not chaos.”**
+> **“Plan every celebration with clarity, not chaos.”**  
 > CelebrateAI turns your event brief into a budget that adds up, a timeline that works backwards from the big day, and a vendor checklist you can actually follow.
+
+[![CI Status](https://github.com/your-username/celebrate-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/celebrate-ai/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
+[![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
+[![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
+[![Tests](https://img.shields.io/badge/Tests-110%20passed-brightgreen)](https://vitest.dev/)
 
 ---
 
-## Architecture Overview
+## Architecture & System Overview
 
-CelebrateAI enforces a strict **separation between deterministic planning facts and GenAI creative recommendations**:
+CelebrateAI enforces an uncompromising **separation between mathematical fact and GenAI creative recommendations**:
 
 ```mermaid
 flowchart TD
-    User([User / Event Planner]) -->|Inputs Brief| Wizard[Planner Wizard / Form]
-    Wizard -->|POST /api/plan| Engine[Deterministic Planning Engine]
+    User([User / Event Planner]) -->|Inputs Brief| Wizard[Planner Wizard: /plan]
+    Wizard -->|POST /api/plan| EdgeGuard[Edge Middleware: Size Limit, CSRF, CSP]
+    EdgeGuard --> RateLimit[Sliding Window Rate Limiter: 10 req/min]
+    RateLimit --> ZodStrict[Zod Strict Validation & HTML Sanitization]
+    ZodStrict --> Audit[Structured Audit Logger]
 
     subgraph Deterministic Core Pure TypeScript
-        Engine -->|Hamilton-Hare 100% Exact Math| Allocator[Budget Allocator]
-        Engine -->|Back-Scheduled from Event Date| Scheduler[Timeline Scheduler]
-        Engine -->|Lead-Time Rules & Google Maps| VendorRules[Vendor Engine]
-        Engine -->|Conflict & Sanity Checks| Feasibility[Feasibility Engine]
+        ZodStrict --> Engine[Deterministic Planning Engine]
+        Engine --> Allocator[Hamilton-Hare Budget Allocator: budget.ts]
+        Engine --> Scheduler[Back-Scheduled Milestones: timeline.ts]
+        Engine --> VendorRules[Vendor Engine & City Cost Bands: vendors.ts]
+        Engine --> Feasibility[6-Rule Conflict Detector: feasibility.ts]
     end
 
-    Engine -->|Locked Computed Plan JSON| Gemini[Gemini 3.8 Flash via @google/genai]
+    Engine -->|Locked <computed_plan> Context| Prompts[Prompt Injection Defense]
+    Prompts --> Cache[10-Minute In-Memory Cache]
+    Cache -->|Cache Miss| Gemini[Gemini 3.8 Flash via @google/genai]
+    Gemini -->|Structured JSON Output| Validator[Zod Output Validator & Savings Calculator]
+    Gemini -.->|API Failure / Throttling| Fallback[Culturally-Accurate Offline Fallbacks]
+    Validator --> Audit
+    Fallback --> Audit
 
-    subgraph Server-Side AI Guardrails
-        Gemini -->|Structured JSON Output| ZodParser[Zod Schema Validator]
-        ZodParser -->|Clamp 0-30% & Cap Lengths| Sanitizer[XSS Sanitizer & Server Math]
-        Sanitizer -->|Fallback on 429/Timeout| Fallback[Offline Template Engine]
-    end
-
-    Sanitizer -->|Merged Enriched Plan| Dashboard[Interactive Mobile-First Dashboard]
-    Dashboard -->|Grounded Queries| Assistant[Ask CelebrateAI Grounded Chat]
+    Validator --> Dashboard[Interactive Dashboard: /dashboard]
+    Dashboard --> BudgetPage[Budget Manager: /budget]
+    Dashboard --> TimelinePage[Timeline & Gantt: /timeline]
+    Dashboard --> VendorPage[Vendor Checklist: /vendors]
+    Dashboard --> IdeasPage[Themes & Menus: /ideas]
+    Dashboard --> AssistantPage[Grounded Chat: /assistant]
+    Dashboard --> ExportPage[Export & ICS: /export]
 ```
 
-### The Cardinal Rule:
-- **Deterministic Planning Engine**: Budget calculations, category percentages, contingency reserves, back-scheduled timeline dates, vendor deadlines, and feasibility warnings are 100% computed via pure TypeScript algorithms.
-- **Gemini 3.8 Flash**: Never invents budget totals, dates, or calculations. Receives a fixed, compact `<computed_plan>` context and strictly generates personalized theme concepts (with 4-color palettes), regional menus respecting dietary constraints, risk matrices, and grounded assistant responses.
+### The Core Architectural Rule:
+- **Deterministic Planning Engine**: Budget allocations, category percentages, contingency reserves ($\ge 10\%$, $\ge 12\%$ for outdoor), back-scheduled milestone dates, vendor booking deadlines, and feasibility warnings are 100% computed via pure TypeScript algorithms.
+- **Gemini 3.8 Flash**: Never invents budget totals, dates, or calculations. Receives a compact, locked `<computed_plan>` XML context and strictly generates 3 personalized themes (with 4-color palettes), regional dietary menus, risk mitigation protocols, and answers to grounded assistant questions.
+- **Prompt Injection Defense**: User text is sanitized and wrapped within `<untrusted_user_text>` tags with explicit model instructions to ignore instructions inside those tags.
+
+For deep-dive documentation, see:
+- 📖 [**ARCHITECTURE.md**](./ARCHITECTURE.md): Complete component and security architecture specifications.
+- 💬 [**PROMPTS.md**](./PROMPTS.md): Engineering rationales for all Gemini prompt templates and schemas.
+- 📝 [**CHANGELOG.md**](./CHANGELOG.md): Detailed release notes and version history.
 
 ---
 
-## Tech Stack
+## 9 Core Application Pages
 
-- **Frontend**: Next.js 14 App Router, TypeScript, Tailwind CSS
-- **Design System**: Warm neutral background (`#fafaf9`), ink text (`#1c1917`), saffron-gold accent (`#d97706`), subtle shadows, rounded-2xl cards, dark mode support
-- **AI**: Google Gemini API via official `@google/genai` SDK (`gemini-3.8-flash`) with strict `responseJsonSchema`
-- **Database**: Supabase Postgres with Row-Level Security (RLS) policies
-- **Auth**: Google Sign-In via Supabase Auth
-- **Testing**: Vitest (93 tests covering deterministic math, schemas, AI validation, and API routes)
-- **Deployment**: Google Cloud Run (multi-stage Docker container with Next.js standalone output)
+| # | Route | Page Title | Key Capabilities |
+|---|---|---|---|
+| 1 | `/` | **Landing Page** | Value proposition hero, live Bengaluru demo cards (Wedding, Birthday, Community), feature grid, and CTAs. |
+| 2 | `/plan` | **Planner Wizard** | 3-step accessible form with progress bar, guest stepper, INR budget formatter, city chip selectors, and multi-select constraint tags. |
+| 3 | `/dashboard` | **Celebration Command Center** | Real-time countdown timer, 5 KPI badges, tonal amber budget donut chart, Gantt view, and quick replanning. |
+| 4 | `/budget` | **Budget & Expense Manager** | Planned vs actual spend tracking, category breakdown table, inline/modal spend editor, contingency buffer status, and server-calculated rupee savings tips. |
+| 5 | `/timeline` | **Milestone Timeline & Gantt** | 21 back-scheduled milestones with status filters (`All`, `Todo`, `Do Now (Overdue)`, `Completed`), owner filters (`Host`, `Family`, `Vendor`, `Planner`), and custom milestone creator. |
+| 6 | `/vendors` | **Vendor Checklist** | Vendor cards, booking deadlines, quote vs budget band comparisons, status workflow (`Shortlisted` $\to$ `Quoted` $\to$ `Booked`), verification interview checklists, and 1-click Google Maps search. |
+| 7 | `/ideas` | **AI Ideas, Menus & Run Sheet** | 3 personalized theme concepts with 4-color copyable swatches, regional banquet menus with dietary tags, risk mitigation matrix, and print-ready event-day run sheet. |
+| 8 | `/assistant` | **Grounded Assistant** | Grounded chat interface with immutable mathematical context sidebar, prompt chips, and citation links. |
+| 9 | `/export` | **Export & Share** | Printable one-sheet executive brief (`@media print`), `.ics` calendar sync download, and copyable WhatsApp family text summary. |
 
 ---
 
-## Key Features
+## Production Security & Hardening
 
-1. **Deterministic Budget Allocator**:
-   - Zero lost rupees/paise via the **Hamilton-Hare (Largest Remainder) Method**.
-   - Mandatory **10%+ contingency reserve** (12%+ for outdoor events).
-   - Dynamic adjustments for city cost tiers (Tier 1 vs Tier 3), guest counts, venue types (indoor vs outdoor), and styles (budget, balanced, premium).
-   - Per-guest catering feasibility warnings against city-tier baselines.
-2. **Back-Scheduled Timeline**:
-   - 21 milestones scheduled backwards from `eventDate`.
-   - **Proportional Timeline Compression**: For short-notice events (< 30 days), all milestones compress into the available window without falling in the past or after the event.
-   - Overdue tasks automatically tagged as **"Do now"**.
-3. **Vendor Procurement Checklist**:
-   - Category-specific booking deadlines and estimated budget bands.
-   - Specific, hard-hitting questions to ask before signing contracts.
-   - Direct Google Maps search links: `https://www.google.com/maps/search/?api=1&query={vendor}+in+{city}`.
-4. **Feasibility Conflict Engine**:
-   - Detects: Budget too low for guest count, venue booking overdue, caterer scheduled after invitations, task congestion (> 3 tasks on one day), missing accessibility for elderly guests, and outdoor rain exposure.
-5. **Grounded "Ask CelebrateAI" Assistant**:
-   - Answers questions strictly using your locked budget and timeline.
-   - Built-in prompt injection defense that politely rejects off-topic queries and prevents instruction tampering.
-   - Returns answer plus 3 relevant follow-up questions and fact citations.
-6. **Export & Sharing**:
-   - Print-friendly event brief (`@media print` clean layout).
-   - RFC 5545 `.ics` calendar export for Google Calendar, Apple Calendar, and Outlook.
-   - 1-click copyable WhatsApp / SMS family group summary.
+1. **Zero Secret Leakage**:
+   - `GEMINI_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are server-side only; client bundles receive only public anonymous keys.
+2. **Next.js Edge Middleware** (`src/middleware.ts`):
+   - **Request Body Size Limit**: Rejects incoming payloads $> 512\text{ KB}$ (`413 Payload Too Large`) to protect against buffer exhaustion attacks.
+   - **CSRF / Origin Protection**: Verifies origin and blocks cross-origin state-changing mutations (`sec-fetch-site: cross-site`).
+   - **Production Security Headers**: Strict Content Security Policy (CSP), HSTS (`max-age=63072000; includeSubDomains; preload`), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy`.
+3. **Zod Strict Validation**:
+   - Every input schema enforces `.strict()` to reject unauthorized or injected parameter tampering.
+4. **Structured Audit Logging** (`src/lib/logging/audit.ts`):
+   - Logs plan generation, replanning, and assistant chats in structured single-line JSON format for Google Cloud Logging / Datadog.
+   - Automatically masks client IP addresses (`192.168.1.xxx`) for GDPR and privacy compliance.
+5. **Generic Error Responses**:
+   - Internal error handlers catch 500 exceptions and return sanitized messages, preventing stack traces or database connection strings from leaking to clients.
 
 ---
 
@@ -93,15 +108,15 @@ CelebrateAI comes pre-seeded with 3 realistic scenarios ready to explore:
 
 ### 1. Prerequisites
 - Node.js 20+
-- npm or pnpm
+- npm 10+
 - Google Gemini API Key (from [Google AI Studio](https://aistudio.google.com/))
-- Supabase project (optional for local in-memory demo exploration, required for live DB persistence)
+- Supabase Project (optional for local in-memory exploration; required for live DB persistence)
 
 ### 2. Installation
 ```bash
 git clone https://github.com/your-username/celebrate-ai.git
 cd celebrate-ai
-npm install
+npm ci
 ```
 
 ### 3. Environment Variables
@@ -109,9 +124,13 @@ Copy `.env.example` to `.env.local`:
 ```bash
 cp .env.example .env.local
 ```
+
 Fill in your credentials:
 ```env
+# Gemini API Key (Server-side only)
 GEMINI_API_KEY=your_gemini_api_key_here
+
+# Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
@@ -125,26 +144,40 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Testing
+## Testing & Quality Assurance
 
-Execute the Vitest test suite (93 unit and integration tests):
+CelebrateAI includes a comprehensive test suite of **110 unit, integration, and security tests across 16 test files** using Vitest:
+
 ```bash
+# Run all tests
 npm run test
+
+# Run tests with code coverage
+npm run test:coverage
+
+# Static TypeScript typecheck
+npx tsc --noEmit
+
+# Code quality lint check
+npm run lint
 ```
 
-Test coverage includes:
-- `budget.test.ts`: Hamilton-Hare exact allocation, positive integer guarantees, contingency >= 10%.
-- `timeline.test.ts`: 21 back-scheduled milestones, short-notice compression (<30d), overdue "Do now" tagging.
-- `vendors.test.ts`: Booking deadlines, budget ranges, and Google Maps query links.
-- `feasibility.test.ts`: Detection of all 6 operational conflict types.
-- `gemini-client.test.ts`: Sliding-window rate limiting (10 req/min), 10-minute caching, prompt injection defense, and offline fallback.
-- `route.test.ts`: API route integration testing for `/api/plan`, `/api/replan`, and `/api/assistant`.
+### Test Suite Breakdown
+- `src/lib/engine/budget.test.ts`: Hamilton-Hare exact allocation, positive integer guarantees, $\ge 10\%$ contingency.
+- `src/lib/engine/timeline.test.ts`: 21 back-scheduled milestones, short-notice compression (<30d), overdue "Do now" tagging.
+- `src/lib/engine/vendors.test.ts`: Booking deadlines, budget ranges, and Google Maps query links.
+- `src/lib/engine/feasibility.test.ts`: Detection of all 6 operational conflict types.
+- `src/lib/ai/gemini-mocked.test.ts`: Malformed Gemini output rejection, prompt injection defense, rate limiting, and grounded assistant responses.
+- `src/lib/security/security-hardening.test.ts`: Zod strict schema rejection, 512 KB payload size enforcement, and audit log IP anonymization.
+- `src/lib/supabase/auth-rls.test.ts`: Supabase service-role key protection and Row-Level Security policy verification.
+- `src/test/integration.test.ts`: Full end-to-end plan generation, replanning, milestone completion, and export data flow.
+- `src/test/a11y-smoke.test.ts`: Screen-reader table alternatives for charts, semantic labels, and focus indicators.
 
 ---
 
 ## Google Cloud Run Deployment
 
-CelebrateAI is packaged with an optimized multi-stage `Dockerfile` and Next.js standalone output.
+CelebrateAI is packaged with an optimized multi-stage `Dockerfile` producing a standalone Node.js production image.
 
 ### 1. Authenticate with Google Cloud
 ```bash
@@ -166,7 +199,7 @@ gcloud services enable \
 gcloud builds submit --tag gcr.io/[YOUR_PROJECT_ID]/celebrate-ai:latest
 ```
 
-### 4. Deploy to Cloud Run
+### 4. Deploy to Google Cloud Run
 ```bash
 gcloud run deploy celebrate-ai \
     --image gcr.io/[YOUR_PROJECT_ID]/celebrate-ai:latest \
@@ -183,4 +216,4 @@ gcloud run deploy celebrate-ai \
 
 ## License
 
-Built for **PromptWars Virtual Challenge 5**. MIT License.
+Built for **PromptWars Virtual Challenge 5**. Distributed under the [MIT License](./LICENSE).

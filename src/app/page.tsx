@@ -151,7 +151,7 @@ export default function LandingPage() {
 
             <div>
               <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                Ananya & Vikram's Heritage Wedding
+                Ananya &amp; Vikram&apos;s Heritage Wedding
               </h3>
               <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                 Palace Grounds, Bengaluru • 350 Guests
@@ -188,7 +188,7 @@ export default function LandingPage() {
 
             <div>
               <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                Rohan's 30th Cyberpunk Rooftop
+                Rohan&apos;s 30th Cyberpunk Rooftop
               </h3>
               <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                 Indiranagar 100 Ft Rd, Bengaluru • 50 Guests

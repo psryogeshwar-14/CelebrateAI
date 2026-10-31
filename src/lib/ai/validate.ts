@@ -12,8 +12,7 @@ export function sanitizeText(str: string): string {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/"/g, '&quot;');
 }
 
 // ----------------------------------------------------------------------------
@@ -136,7 +135,12 @@ export function validateAndMergeEnrichment(
   rawJson: unknown,
   plan: ComputedPlan
 ): ValidatedEnrichmentOutput {
-  const parsed = rawPlanEnrichmentZodSchema.parse(rawJson);
+  const validation = rawPlanEnrichmentZodSchema.safeParse(rawJson);
+  if (!validation.success) {
+    console.warn('[AI Validation] Malformed Gemini response rejected. Falling back to offline templates.');
+    return getOfflineFallbackEnrichment(plan);
+  }
+  const parsed = validation.data;
   const eventDate = plan.input.eventDate;
   const todayStr = plan.input.currentDate || new Date().toISOString().split('T')[0];
 

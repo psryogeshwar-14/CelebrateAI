@@ -222,7 +222,14 @@ export default function PlannerWizardPage() {
             3. Style & Inclusivity
           </span>
         </div>
-        <div className="w-full h-2 bg-stone-200 dark:bg-stone-800 rounded-full overflow-hidden">
+        <div
+          role="progressbar"
+          aria-valuenow={currentStep}
+          aria-valuemin={1}
+          aria-valuemax={3}
+          aria-label="Planning step progress"
+          className="w-full h-2 bg-stone-200 dark:bg-stone-800 rounded-full overflow-hidden"
+        >
           <div
             className="h-full bg-amber-600 dark:bg-amber-500 transition-all duration-300 rounded-full"
             style={{ width: `${(currentStep / 3) * 100}%` }}

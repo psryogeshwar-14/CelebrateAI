@@ -142,6 +142,7 @@ export function CelebrateProvider({ children }: { children: React.ReactNode }) {
     if (!plan) {
       loadDemoEvent('wedding');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setPlan = (newPlan: ComputedPlan, ai?: ValidatedEnrichmentOutput) => {
