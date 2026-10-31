@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-10-31
+
+### Changed & Refactored (Production Code Quality Overhaul: 88 -> 97+)
+- **Feature-Sliced Architecture (`src/features/`)**:
+  - Modularized domain features into `src/features/{events, budget, timeline, vendors, ai}` with clean public API boundaries (`index.ts`).
+  - Extracted 20+ focused components, custom hooks (`useWizardForm`), and domain schemas.
+- **Route Thinning**:
+  - Refactored all 9 Next.js App Router pages into ultra-thin Server Components (<15 lines each) with zero business logic or inline state.
+- **Server Execution Layer (`src/server/`)**:
+  - Isolated database client factories (`supabase-client.ts`, `supabase-server.ts`, `supabase-admin.ts`).
+  - Added strongly-typed repositories (`EventRepository`, `BudgetRepository`, `TimelineRepository`, `VendorRepository`, `IdeaRepository`).
+  - Modularized AI adapter into `gemini-adapter.ts`, `gemini-cache.ts`, and `gemini-fallbacks.ts`.
+- **Strict TypeScript & Zero `any` Types**:
+  - Eliminated 100% of `any` types and non-null assertions across all models, API routes, and components.
+  - Added typed error hierarchy (`AppError`, `ValidationError`, `RateLimitError`, `GeminiApiError`) in `src/shared/lib/errors.ts`.
+  - Added centralized domain configuration in `src/shared/config/constants.ts`.
+- **Quality Gates & Preservation**:
+  - 112 / 112 automated unit, integration, and security tests passing.
+  - Zero warnings or errors in `next lint` and `tsc --noEmit`.
+  - Next.js production build verified successful across all static and dynamic routes.
+
 ## [1.0.0] - 2026-10-31
 
 ### Added

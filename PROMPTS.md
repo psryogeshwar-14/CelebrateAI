@@ -7,7 +7,7 @@ This document catalogs every prompt used within CelebrateAI across Google Antigr
 ## 1. Creative Plan Enrichment Prompt (`buildEnrichmentPrompt`)
 
 ### Location
-[`src/lib/ai/prompts.ts`](file:///Users/psryogeshwar/Downloads/prompt%20war/src/lib/ai/prompts.ts) $\to$ `buildEnrichmentPrompt(plan: ComputedPlan)`
+[`src/features/ai/prompts/system-prompts.ts`](file:///Users/psryogeshwar/Downloads/prompt%20war/src/features/ai/prompts/system-prompts.ts) and [`src/server/ai/gemini-adapter.ts`](file:///Users/psryogeshwar/Downloads/prompt%20war/src/server/ai/gemini-adapter.ts) $\to$ `buildEnrichmentPrompt(plan: ComputedPlan)`
 
 ### Target Model
 `gemini-3.8-flash` via `@google/genai` SDK with `responseJsonSchema` (`Type.OBJECT`).

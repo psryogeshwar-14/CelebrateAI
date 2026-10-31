@@ -19,8 +19,13 @@ describe('Accessibility (a11y) Smoke Tests for Major Pages and Components', () =
   });
 
   it('Planner Wizard form fields have explicit labels and error bindings', () => {
-    const plannerFilePath = path.join(process.cwd(), 'src/app/plan/page.tsx');
-    const content = fs.readFileSync(plannerFilePath, 'utf-8');
+    const wizardFiles = [
+      path.join(process.cwd(), 'src/app/plan/page.tsx'),
+      path.join(process.cwd(), 'src/features/events/components/EventWizard.tsx'),
+      path.join(process.cwd(), 'src/features/events/components/WizardStep1Basics.tsx'),
+      path.join(process.cwd(), 'src/features/events/components/WizardStep2Scale.tsx'),
+    ];
+    const content = wizardFiles.map((f) => fs.readFileSync(f, 'utf-8')).join('\n');
 
     // All form steps must contain accessible labels
     expect(content).toContain('<label');
@@ -30,8 +35,12 @@ describe('Accessibility (a11y) Smoke Tests for Major Pages and Components', () =
   });
 
   it('Never uses color as the sole indicator of status', () => {
-    const timelineFilePath = path.join(process.cwd(), 'src/app/timeline/page.tsx');
-    const content = fs.readFileSync(timelineFilePath, 'utf-8');
+    const timelineFiles = [
+      path.join(process.cwd(), 'src/app/timeline/page.tsx'),
+      path.join(process.cwd(), 'src/features/timeline/components/TimelineFeature.tsx'),
+      path.join(process.cwd(), 'src/features/timeline/components/MilestoneCard.tsx'),
+    ];
+    const content = timelineFiles.map((f) => fs.readFileSync(f, 'utf-8')).join('\n');
 
     // Badges must have clear text descriptions, not just colors
     expect(content).toContain('Do Now');

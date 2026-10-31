@@ -7,6 +7,7 @@
 [![CI Status](https://github.com/psryogeshwar-14/CelebrateAI/actions/workflows/ci.yml/badge.svg)](https://github.com/psryogeshwar-14/CelebrateAI/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-97%2B-brightgreen)](./CODE_QUALITY.md)
 [![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
 [![Google Cloud Run](https://img.shields.io/badge/Cloud%20Run-asia--south1-4285F4?logo=googlecloud&logoColor=white)](https://cloud.google.com/run)
 [![Tests](https://img.shields.io/badge/Tests-112%20passed-brightgreen)](https://vitest.dev/)

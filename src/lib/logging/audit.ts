@@ -16,7 +16,7 @@ export interface AuditLogEntry {
   durationMs?: number;
   isAIOffline?: boolean;
   reason?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 /**

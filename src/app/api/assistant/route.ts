@@ -4,6 +4,8 @@ import { generateGroundedAssistantReply, checkRateLimit } from '@/lib/ai/gemini-
 import { ComputedPlan } from '@/lib/engine/types';
 import { logAuditEvent } from '@/lib/logging/audit';
 import { sanitizeText } from '@/lib/ai/validate';
+import { getErrorMessage } from '@/shared/lib/errors';
+import { logger } from '@/shared/lib/logger';
 
 const chatMessageZodSchema = z
   .object({
@@ -52,7 +54,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let body: any;
+    let body: unknown;
     try {
       body = await req.json();
     } catch {
@@ -106,17 +108,18 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
+    const errorMessage = getErrorMessage(error);
     logAuditEvent({
       action: 'assistant_chat',
       ip: clientIp,
       status: 'failed',
       durationMs,
-      reason: error?.message || 'Assistant failure',
+      reason: errorMessage,
     });
 
-    console.error('[API /api/assistant] Internal exception:', error);
+    logger.error('[API /api/assistant] Internal exception', error, { clientIp, durationMs }, 'api-assistant');
 
     return NextResponse.json(
       {

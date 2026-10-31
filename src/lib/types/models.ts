@@ -86,7 +86,7 @@ export interface IdeaModel {
     | RiskIdeaContent
     | RunSheetIdeaContent
     | SavingTipIdeaContent
-    | Record<string, any>;
+    | Record<string, unknown>;
   createdAt: string;
 }
 

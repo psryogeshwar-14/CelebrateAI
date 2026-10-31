@@ -1,3 +1,5 @@
+import { Json } from '../types/database.types';
+
 export interface SeedEventBundle {
   event: {
     id: string;
@@ -51,7 +53,7 @@ export interface SeedEventBundle {
   }>;
   ideas: Array<{
     kind: 'theme' | 'menu' | 'risk' | 'run_sheet' | 'saving_tip';
-    content: any;
+    content: Json;
   }>;
 }
 

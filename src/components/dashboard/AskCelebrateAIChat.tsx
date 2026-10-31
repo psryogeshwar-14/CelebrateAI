@@ -11,6 +11,7 @@ import {
   User,
   ExternalLink,
 } from 'lucide-react';
+import { logger } from '@/shared/lib/logger';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -82,8 +83,8 @@ export function AskCelebrateAIChat({ plan }: AskCelebrateAIChatProps) {
       if (reply.suggestedQuestions && reply.suggestedQuestions.length === 3) {
         setSuggestedQuestions(reply.suggestedQuestions);
       }
-    } catch (err: any) {
-      console.warn('Chat assistant fallback error:', err);
+    } catch (err: unknown) {
+      logger.warn('Chat assistant fallback triggered', { error: String(err) }, 'AskCelebrateAIChat');
       setMessages((prev) => [
         ...prev,
         {

@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home, ShieldAlert } from 'lucide-react';
+import { logger } from '@/shared/lib/logger';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -12,7 +13,7 @@ interface ErrorProps {
 export default function ErrorPage({ error, reset }: ErrorProps) {
   useEffect(() => {
     // Log exception safely server-side / to monitoring
-    console.error('[CelebrateAI Application Error Boundary]:', error);
+    logger.error('CelebrateAI Application Error Boundary triggered', error, undefined, 'error-boundary');
   }, [error]);
 
   return (

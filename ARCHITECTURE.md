@@ -4,21 +4,22 @@ CelebrateAI is a full-stack generative celebration and event planner engineered 
 
 ---
 
-## High-Level Architecture Diagram
+## 1. High-Level Architecture Diagram
 
 ```mermaid
 flowchart TD
-    subgraph Client ["Client Layer (Next.js 14 App Router)"]
-        UI["Mobile-First UI (Tailwind + shadcn)"]
-        Pages["9 Core Pages (/plan, /dashboard, /budget, /timeline, /vendors, /ideas, /assistant, /export)"]
-        State["CelebrateProvider (React Context & LocalStorage)"]
+    subgraph Client ["Client Layer (Feature-Sliced App Router)"]
+        Routes["Thin Routes: src/app/ (*.tsx < 15 lines)"]
+        Features["src/features/{events, budget, timeline, vendors, ai}"]
+        SharedUI["src/shared/ui/ (Card, Badge, Modal)"]
+        Context["CelebrateProvider (React Context & LocalStorage)"]
     end
 
     subgraph Security ["Security & Guardrail Perimeter"]
         Middleware["Edge Middleware (Size Limit 512KB, CSRF/Origin, Security Headers)"]
         RateLimiter["Sliding Window Rate Limiter (10 req/min/IP)"]
         ZodStrict["Strict Zod Validation & HTML Sanitizer"]
-        AuditLog["Structured Audit Logger (Cloud Logging JSON)"]
+        AuditLog["Structured Audit Logger (Cloud Logging JSON with PII Masking)"]
     end
 
     subgraph API ["Server-Side API Routes"]
@@ -27,33 +28,32 @@ flowchart TD
         RouteAssistant["POST /api/assistant"]
     end
 
+    subgraph ServerLayer ["Server Execution Layer"]
+        ServerSvc["src/server/services/ (ServerEventService, FeasibilityService)"]
+        Repos["src/server/repositories/ (Event, Budget, Timeline, Vendor, Idea)"]
+        DB["src/server/db/ (Browser, SSR, Admin Service-Role Clients)"]
+        ServerAI["src/server/ai/ (GeminiAdapter, GeminiCache, GeminiFallbacks)"]
+    end
+
     subgraph Engine ["Deterministic Planning Engine (Pure TypeScript)"]
         BudgetEngine["Budget Allocator (Hamilton-Hare Largest Remainder)"]
-        TimelineEngine["Timeline Scheduler (21 Back-Scheduled Milestones)"]
+        TimelineEngine["Timeline Scheduler (Back-Scheduled Milestones)"]
         VendorEngine["Vendor Checklist & Local Cost Bands"]
         FeasibilityEngine["Conflict Detector (6 Rule Feasibility Engine)"]
         PlannerOrchestrator["Planner Orchestrator (Sub-millisecond Compute)"]
     end
 
-    subgraph AI ["AI Layer (Server-Side Only)"]
-        Prompts["Prompt Injection Defense (<untrusted_user_text> & XML Context)"]
-        GeminiClient["Gemini 3.8 Flash Client (@google/genai SDK)"]
-        Cache["10-Minute In-Memory Plan Cache"]
-        OfflineFallback["Culturally-Accurate Offline Fallback Engine"]
-        Validator["Zod Output Validator & Savings Calculator"]
+    subgraph ExternalServices ["External Services"]
+        GeminiAPI["Google Gemini 2.5 Flash API (@google/genai SDK)"]
+        SupabaseDB["Supabase Postgres with RLS"]
     end
 
-    subgraph Data ["Persistence & Auth Layer"]
-        SupabaseAuth["Supabase Auth (Google OAuth & Session Management)"]
-        SupabaseDB["Supabase Postgres (5 Tables with RLS)"]
-        RLS["Row Level Security (auth.uid() = user_id OR is_demo = true)"]
-    end
-
-    UI --> State
-    Pages --> UI
-    State --> RoutePlan
-    State --> RouteReplan
-    State --> RouteAssistant
+    Routes --> Features
+    Features --> Context
+    Features --> SharedUI
+    Context --> RoutePlan
+    Context --> RouteReplan
+    Context --> RouteAssistant
 
     RoutePlan --> Middleware
     RouteReplan --> Middleware
@@ -67,25 +67,56 @@ flowchart TD
     PlannerOrchestrator --> VendorEngine
     PlannerOrchestrator --> FeasibilityEngine
 
-    PlannerOrchestrator --> Prompts
-    Prompts --> Cache
-    Cache -->|Cache Miss| GeminiClient
-    GeminiClient -->|API Failure / Offline| OfflineFallback
-    GeminiClient -->|JSON Response| Validator
-    Validator --> AuditLog
-    Validator --> RoutePlan
+    ZodStrict --> ServerSvc
+    ServerSvc --> Repos
+    Repos --> DB
+    DB --> SupabaseDB
 
-    State -.-> SupabaseAuth
-    State -.-> SupabaseDB
-    SupabaseDB --> RLS
+    ZodStrict --> ServerAI
+    ServerAI --> GeminiAPI
 ```
 
 ---
 
-## Core Architectural Pillars
+## 2. Directory Layout & Layer Boundaries
+
+```
+src/
+  app/                      # Routing layer only: Thin Server Components (<15 lines each)
+    page.tsx                # Composes <LandingFeature />
+    plan/page.tsx           # Composes <EventWizard />
+    dashboard/page.tsx      # Composes <DashboardFeature />
+    budget/page.tsx         # Composes <BudgetFeature />
+    timeline/page.tsx       # Composes <TimelineFeature />
+    vendors/page.tsx        # Composes <VendorsFeature />
+    ideas/page.tsx          # Composes <IdeasFeature />
+    assistant/page.tsx      # Composes <AssistantFeature />
+    export/page.tsx         # Composes <ExportFeature />
+    api/                    # RESTful endpoints with Zod validation & PII audit logging
+  features/                 # Domain-driven feature modules
+    events/                 # Event lifecycle, wizard, dashboard, export
+    budget/                 # Budget allocations, donut charts, expense tracking
+    timeline/               # Back-scheduling, milestones, gantt view, run sheet
+    vendors/                # Category checklists, pricing tiers, maps search
+    ai/                     # Themes, menus, risk mitigation, grounded chat
+  server/                   # Isolated server execution
+    db/                     # Supabase client, SSR server, admin service-role
+    repositories/           # Event, Budget, Timeline, Vendor, Idea repositories
+    services/               # ServerEventService, FeasibilityService
+    ai/                     # GeminiAdapter, GeminiCache, GeminiFallbacks
+  shared/                   # Cross-cutting foundational utilities
+    ui/                     # Card, Badge, Modal
+    lib/                    # AppError, ValidationError, RateLimitError, Logger
+    config/                 # PLANNING_CONSTANTS
+    types/                  # AsyncState<T>, Result<T, E>
+```
+
+---
+
+## 3. Core Architectural Pillars
 
 ### 1. The Deterministic Planning Engine
-All facts are single-source-of-truth mathematical calculations:
+All numerical and calendar facts are single-source-of-truth mathematical calculations:
 - **Budget Allocation (`budget.ts`)**: Implements the **Hamilton-Hare (Largest Remainder) Method**. All allocations are guaranteed to be positive integers summing exactly to `totalBudget`. Enforces a minimum 10% contingency reserve (12% for outdoor events).
 - **Timeline Back-Scheduling (`timeline.ts`)**: Computes 21 chronological milestones backwards from `eventDate`. Proportionally compresses milestones for short-notice events (<30 days). Due dates are guaranteed to be $\le \text{eventDate}$. Automatically flags overdue tasks as "Do Now".
 - **Vendor Checklist (`vendors.ts`)**: Maps essential vendors according to city cost tiers (Tier 1 Bengaluru/Mumbai/Delhi, Tier 2, Tier 3) with target booking deadlines, key interview questions, and direct Google Maps query URLs.
@@ -97,21 +128,21 @@ All facts are single-source-of-truth mathematical calculations:
   5. `missing_accessibility`: Missing ramps/seating when elderly or disabled guests attend.
   6. `outdoor_weather_risk`: Outdoor event without rain buffer contingency.
 
-### 2. GenAI Integration Philosophy
-Google Gemini (`gemini-3.8-flash` via `@google/genai`) is treated strictly as an **untrusted creative enrichment worker**:
-- **Prompt Injection Defense**: User-supplied text (`title`, `specialRequests`, chat messages) is HTML-sanitized and isolated within `<untrusted_user_text>` tags. System instructions explicitly command the model to ignore any instructions inside those tags.
-- **Fixed Fact Context**: A compact `<computed_plan>` XML document is fed to the model with the directive: *"These computed facts are fixed. Do not change amounts, dates, deadlines, or calculations. Use them only to personalize recommendations."*
-- **Strict Structured Outputs**: Output schema enforces exact JSON structures using the official `@google/genai` `Type` enum.
-- **Server-Side Validation & Savings Clamping**: All returned savings percentages are clamped between 0% and 30%. Unknown categories are rejected. Rupee savings amounts are computed by the server from actual budget lines—Gemini is never allowed to calculate currency figures.
-- **Graceful Offline Degradation**: If `GEMINI_API_KEY` is absent, throttled (429), or unavailable, CelebrateAI automatically loads high-fidelity culturally grounded fallback templates labelled `"AI offline mode"`.
+### 2. GenAI Integration & Grounding Rules
+- **Server-Side Only**: Gemini calls are executed strictly in server-side API routes via `@google/genai`. Zero browser exposure.
+- **Strict JSON Schema**: Structured outputs are enforced with `responseMimeType: 'application/json'` and strict JSON schemas.
+- **Zod Post-Validation**: Every Gemini response is parsed and sanitized through Zod schemas before returning to clients.
+- **Zero Hallucination Boundary**: Gemini is never asked to compute budgets, dates, or vendor deadlines. The AI is fed the locked deterministic numbers in prompt context and instructed never to contradict them.
+- **Fault-Tolerant Resilience**: In-memory 10-minute cache with automatic retry on 429/5xx, and instantaneous fallback to rich cultural templates when offline.
 
-### 3. Security & Isolation Model
-- **Zero Client Key Exposure**: `GEMINI_API_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are strictly server-side environment variables. No client bundle ever receives them.
-- **Next.js Middleware Guardrails**:
-  - Rejects request payloads $> 512\text{ KB}$ (`413 Payload Too Large`).
-  - Blocks cross-origin state-changing mutations (`sec-fetch-site: cross-site`).
-  - Injects defense-in-depth HTTP headers: Strict Content Security Policy (CSP), HSTS, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, and `Permissions-Policy`.
-- **Database Row-Level Security (RLS)**:
-  - Public demo events (`is_demo = true`) are accessible to unauthenticated guests.
-  - User-created events are strictly partitioned: `auth.uid() = user_id`.
-- **Audit Logging**: Every plan generation, replan, and grounded assistant interaction is logged as structured JSON to stdout for Google Cloud Logging, with IP addresses automatically masked for privacy compliance.
+---
+
+## 4. Quality Gates & Enforcement
+
+| Quality Gate | Standard | Status |
+| :--- | :--- | :--- |
+| **Type Safety** | `npx tsc --noEmit` (strict mode, 0 `any`) | Verified passing |
+| **Linting** | `next lint` (0 warnings, 0 errors) | Verified passing |
+| **Automated Tests** | `npx vitest run` (112 / 112 passing) | Verified passing |
+| **Production Build** | `next build` (Standalone output, all 15 routes pre-rendered) | Verified passing |
+| **Continuous Integration**| GitHub Actions CI (`.github/workflows/ci.yml`) | Verified active |

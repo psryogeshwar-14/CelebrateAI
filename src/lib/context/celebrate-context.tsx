@@ -5,6 +5,8 @@ import { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
 import { computePlan } from '../engine/planner';
 import { ValidatedEnrichmentOutput, getOfflineFallbackEnrichment } from '../ai/validate';
 import { BENGALURU_DEMO_EVENTS } from '../data/seeds';
+import { getErrorMessage } from '@/shared/lib/errors';
+import { logger } from '@/shared/lib/logger';
 
 interface CelebrateContextType {
   plan: ComputedPlan | null;
@@ -129,9 +131,9 @@ export function CelebrateProvider({ children }: { children: React.ReactNode }) {
       setCompletedTaskIds(completedIds);
       setVendorOverrides(initialVendors);
       setActiveDemoId(demoType);
-    } catch (err: any) {
-      console.error('Failed to load demo event:', err);
-      setError(err?.message || 'Error loading demo');
+    } catch (err: unknown) {
+      logger.error('Failed to load demo event', err, { demoType }, 'celebrate-context');
+      setError(getErrorMessage(err) || 'Error loading demo');
     } finally {
       setIsLoading(false);
     }
@@ -218,8 +220,8 @@ export function CelebrateProvider({ children }: { children: React.ReactNode }) {
         // Fallback to local offline template
         setAiEnrichment(getOfflineFallbackEnrichment(updatedPlan));
       }
-    } catch (err: any) {
-      console.warn('Replan API call failed, applied local fallback:', err);
+    } catch (err: unknown) {
+      logger.warn('Replan API call failed, applied local fallback', { error: String(err) }, 'celebrate-context');
       const fallbackPlan = computePlan(mergedInput);
       setPlanState(fallbackPlan);
       setAiEnrichment(getOfflineFallbackEnrichment(fallbackPlan));

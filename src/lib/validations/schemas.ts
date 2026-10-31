@@ -132,7 +132,7 @@ export const updateVendorSchema = z.object({
 export const createIdeaSchema = z.object({
   eventId: z.string().uuid(),
   kind: ideaKindEnum,
-  content: z.record(z.any()),
+  content: z.record(z.unknown()),
 });
 
 // ============================================================================

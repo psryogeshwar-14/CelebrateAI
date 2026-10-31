@@ -5,6 +5,8 @@ import { EventPlanningInput, EventType, StylePreference, VenueTypePreference } f
 import { generatePlanEnrichment, checkRateLimit } from '@/lib/ai/gemini-client';
 import { logAuditEvent } from '@/lib/logging/audit';
 import { sanitizeText } from '@/lib/ai/validate';
+import { getErrorMessage } from '@/shared/lib/errors';
+import { logger } from '@/shared/lib/logger';
 
 // Strict schema rejecting unexpected injected fields
 const planRequestZodSchema = z
@@ -59,7 +61,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Validate Request Body with Strict Zod
-    let body: any;
+    let body: unknown;
     try {
       body = await req.json();
     } catch {
@@ -141,18 +143,19 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log internal error safely without exposing stack trace to client
     const durationMs = Date.now() - startTime;
+    const errorMessage = getErrorMessage(error);
     logAuditEvent({
       action: 'plan_generate',
       ip: clientIp,
       status: 'failed',
       durationMs,
-      reason: error?.message || 'Internal failure',
+      reason: errorMessage,
     });
 
-    console.error('[API /api/plan] Internal exception:', error);
+    logger.error('[API /api/plan] Internal exception', error, { clientIp, durationMs }, 'api-plan');
 
     // Generic error response protecting internal architecture
     return NextResponse.json(
