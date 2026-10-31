@@ -58,5 +58,5 @@ Paste the following verified details into the Hack2skill submission form:
 - **Project Name**: CelebrateAI
 - **Live Application URL**: `https://celebrate-ai-three.vercel.app`
 - **GitHub Repository**: `https://github.com/psryogeshwar-14/CelebrateAI`
-- **Technical Blog URL**: `[YOUR_PUBLISHED_BLOG_URL]`
-- **LinkedIn Post URL**: `[YOUR_LINKEDIN_POST_URL]`
+- **Technical Blog URL**: `https://dev.to/psryogeshwar14/how-i-built-celebrateai-a-grounded-genai-event-planner-with-gemini-and-google-cloud-run-1men`
+- **LinkedIn Post URL**: `https://lnkd.in/p/g3izSWtE`
