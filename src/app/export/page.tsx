@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCelebrate } from '@/lib/context/celebrate-context';
+import { EventSubNav } from '@/components/layout/EventSubNav';
 import { formatINR } from '@/lib/utils/deterministic';
 import {
   Printer,
@@ -106,6 +107,11 @@ Created with CelebrateAI (https://celebrate-ai.web.app)
 
   return (
     <div className="space-y-8 py-4 sm:py-8 max-w-4xl mx-auto">
+      {/* Navigation Sub-bar (Hidden during print) */}
+      <div className="no-print">
+        <EventSubNav title="Export & Share Event Plan" />
+      </div>
+
       {/* Top Header Controls (Hidden during print) */}
       <div className="no-print flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
         <Link

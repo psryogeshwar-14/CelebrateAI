@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCelebrate } from '@/lib/context/celebrate-context';
+import { EventSubNav } from '@/components/layout/EventSubNav';
 import { CountdownCard } from '@/components/dashboard/CountdownCard';
 import { KpiCards } from '@/components/dashboard/KpiCards';
 import { BudgetDonutChart } from '@/components/dashboard/BudgetDonutChart';
@@ -77,55 +78,8 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* Top Banner: Title & Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-200 dark:border-stone-800">
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-900 dark:text-stone-50">
-              {plan.input.title}
-            </h1>
-            {aiEnrichment?.isAIOffline && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
-                AI Offline Mode
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-center space-x-4 text-xs text-stone-500 dark:text-stone-400 font-medium">
-            <span className="inline-flex items-center space-x-1">
-              <MapPin className="w-3.5 h-3.5 text-amber-600" />
-              <span>{plan.input.city}</span>
-            </span>
-            <span className="inline-flex items-center space-x-1">
-              <Calendar className="w-3.5 h-3.5 text-amber-600" />
-              <span>{plan.input.eventDate}</span>
-            </span>
-            <span className="inline-flex items-center space-x-1">
-              <Users className="w-3.5 h-3.5 text-amber-600" />
-              <span>{plan.input.guestCount} Guests</span>
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <button
-            type="button"
-            onClick={() => setIsReplanOpen(true)}
-            className="px-3.5 py-2 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-200 text-xs font-semibold hover:bg-stone-50 flex items-center space-x-1.5 shadow-2xs"
-          >
-            <RefreshCw className="w-3.5 h-3.5 text-amber-600" />
-            <span>Adjust & Replan</span>
-          </button>
-
-          <Link
-            href="/export"
-            className="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-2xs"
-          >
-            <Share2 className="w-3.5 h-3.5" />
-            <span>Export & Share</span>
-          </Link>
-        </div>
-      </div>
+      {/* Top Navigation Tabs & Controls */}
+      <EventSubNav />
 
       {/* 1. Countdown Card */}
       <CountdownCard targetDate={plan.input.eventDate} eventTitle={plan.input.title} />

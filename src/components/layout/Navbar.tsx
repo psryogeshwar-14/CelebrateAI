@@ -23,9 +23,14 @@ export function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/plan', label: 'Plan New Event' },
+    { href: '/plan', label: 'Plan Event' },
     { href: '/dashboard', label: 'Dashboard' },
-    { href: '/export', label: 'Export & Share' },
+    { href: '/budget', label: 'Budget' },
+    { href: '/timeline', label: 'Timeline' },
+    { href: '/vendors', label: 'Vendors' },
+    { href: '/ideas', label: 'Ideas' },
+    { href: '/assistant', label: 'Assistant' },
+    { href: '/export', label: 'Export' },
   ];
 
   return (
