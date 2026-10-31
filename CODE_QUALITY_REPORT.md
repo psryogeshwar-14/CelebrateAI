@@ -38,7 +38,13 @@ CelebrateAI underwent an exhaustive, production-grade refactoring to elevate its
 * **Database Client Isolation**: Created `src/server/db/` isolating browser (`supabase-client.ts`), SSR (`supabase-server.ts`), and service-role (`supabase-admin.ts`).
 * **Typed Repositories**: Implemented `EventRepository`, `BudgetRepository`, `TimelineRepository`, `VendorRepository`, and `IdeaRepository` in `src/server/repositories/`.
 * **Server Services**: Created `ServerEventService` and `FeasibilityService` in `src/server/services/`.
-* **Server AI Adapter**: Modularized `gemini-adapter.ts`, `gemini-cache.ts`, and `gemini-fallbacks.ts` in `src/server/ai/`.
+* **Injectable AI Adapter & Services Architecture (`src/features/ai/`)**:
+  * `adapters/gemini-client.ts`: `GeminiClientAdapter` implementing `IGeminiClientAdapter`, owning raw SDK calls, timeout races, single transient retry on 429/5xx, typed `GeminiApiError`/`RateLimitError`, and secret-safe logging.
+  * `services/gemini.service.ts`: `GeminiService` orchestrating prompt selection, 10-minute deterministic caching, 10 req/min sliding-window rate limiting, and grounded chat execution.
+  * `services/recommendation.service.ts`: `RecommendationService` performing Zod post-validation, phantom category rejection, percentage clamping (0–30%), server-calculated monetary savings, date offset transformation, and rich Bengaluru offline fallbacks.
+  * `prompts/`: Versioned prompt constants (`EVENT_PLANNER_PROMPT_VERSION`, `REPLAN_PROMPT_VERSION`, `ASSISTANT_PROMPT_VERSION`) with `<untrusted_user_text>` passive encapsulation and immutable directive defense.
+  * `schemas/recommendation.schema.ts`: Google GenAI strict `responseSchema` with descriptions on every field alongside strict post-response Zod validation schemas.
+  * `services/gemini.service.test.ts`: 8 test suites verifying valid output, malformed JSON, semantically invalid output, timeouts, rate limits, transient retry, and prompt injection defenses (120/120 tests passing).
 
 ### Phase 3: Feature-Sliced Modules
 * **Events Feature (`src/features/events/`)**: Created `LandingFeature`, `EventWizard`, `WizardStep1Basics`, `WizardStep2Scale`, `WizardStep3Style`, `DemoEventCards`, `DashboardFeature`, `ExportFeature`, `useWizardForm`, and `wizard.constants.ts`.
