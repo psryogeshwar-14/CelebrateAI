@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](./LICENSE)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org/)
 [![Google Gemini](https://img.shields.io/badge/Gemini-3.8--Flash-blue)](https://ai.google.dev/)
-[![Tests](https://img.shields.io/badge/Tests-110%20passed-brightgreen)](https://vitest.dev/)
+[![Tests](https://img.shields.io/badge/Tests-111%20passed-brightgreen)](https://vitest.dev/)
 
 ---
 
@@ -146,7 +146,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Testing & Quality Assurance
 
-CelebrateAI includes a comprehensive test suite of **110 unit, integration, and security tests across 16 test files** using Vitest:
+CelebrateAI includes a comprehensive test suite of **111 unit, integration, and security tests across 17 test files** using Vitest:
 
 ```bash
 # Run all tests
@@ -170,46 +170,70 @@ npm run lint
 - `src/lib/ai/gemini-mocked.test.ts`: Malformed Gemini output rejection, prompt injection defense, rate limiting, and grounded assistant responses.
 - `src/lib/security/security-hardening.test.ts`: Zod strict schema rejection, 512 KB payload size enforcement, and audit log IP anonymization.
 - `src/lib/supabase/auth-rls.test.ts`: Supabase service-role key protection and Row-Level Security policy verification.
+- `src/app/api/health/route.test.ts`: GET `/api/health` status, HTTP 200, and non-caching headers.
 - `src/test/integration.test.ts`: Full end-to-end plan generation, replanning, milestone completion, and export data flow.
 - `src/test/a11y-smoke.test.ts`: Screen-reader table alternatives for charts, semantic labels, and focus indicators.
 
 ---
 
-## Google Cloud Run Deployment
+## Google Cloud Run Deployment (asia-south1)
 
-CelebrateAI is packaged with an optimized multi-stage `Dockerfile` producing a standalone Node.js production image.
+CelebrateAI is packaged with an optimized multi-stage `Dockerfile` (Node 20 Alpine, non-root `nextjs:nodejs` user, `tini` init for graceful `SIGTERM` connection draining) producing a standalone Next.js production image listening on `process.env.PORT`.
 
-### 1. Authenticate with Google Cloud
+### 1. Authenticate and Set Project
 ```bash
 gcloud auth login
 gcloud config set project [YOUR_PROJECT_ID]
 ```
 
-### 2. Enable Required APIs
+### 2. Automated One-Command Deployment
+Run the automated deployment script which enables APIs, provisions Secret Manager, builds the image, and deploys to Cloud Run in `asia-south1`:
 ```bash
+chmod +x ./scripts/deploy-cloud-run.sh
+./scripts/deploy-cloud-run.sh [YOUR_PROJECT_ID]
+```
+
+### 3. Manual Deployment Commands
+If deploying manually step-by-step:
+
+```bash
+# A. Enable Google Cloud APIs
 gcloud services enable \
     run.googleapis.com \
     artifactregistry.googleapis.com \
     secretmanager.googleapis.com \
-    cloudbuild.googleapis.com
-```
+    cloudbuild.googleapis.com \
+    --project=[YOUR_PROJECT_ID]
 
-### 3. Build Container via Google Cloud Build
-```bash
-gcloud builds submit --tag gcr.io/[YOUR_PROJECT_ID]/celebrate-ai:latest
-```
+# B. Store Secrets in Google Secret Manager (Zero secret printing in logs)
+chmod +x ./scripts/setup-secrets.sh
+./scripts/setup-secrets.sh [YOUR_PROJECT_ID]
 
-### 4. Deploy to Google Cloud Run
-```bash
-gcloud run deploy celebrate-ai \
-    --image gcr.io/[YOUR_PROJECT_ID]/celebrate-ai:latest \
+# C. Submit Container Build to Cloud Build
+gcloud builds submit \
+    --project=[YOUR_PROJECT_ID] \
+    --tag gcr.io/[YOUR_PROJECT_ID]/celebrateai:latest \
+    .
+
+# D. Deploy to Google Cloud Run in asia-south1
+gcloud run deploy celebrateai \
+    --project=[YOUR_PROJECT_ID] \
+    --image gcr.io/[YOUR_PROJECT_ID]/celebrateai:latest \
     --platform managed \
-    --region us-central1 \
+    --region asia-south1 \
     --allow-unauthenticated \
     --port 8080 \
-    --memory 1Gi \
+    --min-instances 0 \
+    --max-instances 3 \
+    --memory 512Mi \
     --cpu 1 \
-    --set-env-vars="NODE_ENV=production,GEMINI_API_KEY=[YOUR_KEY],NEXT_PUBLIC_SUPABASE_URL=[YOUR_URL],NEXT_PUBLIC_SUPABASE_ANON_KEY=[YOUR_KEY]"
+    --set-secrets="GEMINI_API_KEY=GEMINI_API_KEY:latest,NEXT_PUBLIC_SUPABASE_URL=NEXT_PUBLIC_SUPABASE_URL:latest,NEXT_PUBLIC_SUPABASE_ANON_KEY=NEXT_PUBLIC_SUPABASE_ANON_KEY:latest,SUPABASE_SERVICE_ROLE_KEY=SUPABASE_SERVICE_ROLE_KEY:latest"
+```
+
+### 4. Health Check
+```bash
+curl -i https://[SERVICE_URL]/api/health
+# Response: HTTP/1.1 200 OK -> {"status":"ok"}
 ```
 
 ---

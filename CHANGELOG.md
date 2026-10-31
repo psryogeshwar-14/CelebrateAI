@@ -39,9 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/assistant`: Full-screen grounded chat assistant with immutable context sidebar.
   - `/export`: Executive printable brief, `.ics` calendar sync download, and WhatsApp summary generator.
 - **Testing & Quality Assurance**:
-  - 16 test files with 110 passed unit, integration, and security tests.
+  - 17 test files with 111 passed unit, integration, and security tests.
   - High test coverage across core planning engine (>85%), validation schemas (100%), and deterministic utilities (>94%).
   - Accessibility smoke tests validating ARIA labels, screen-reader table alternatives, and reduced motion compliance.
-- **DevOps & CI**:
-  - Multi-stage standalone Dockerfile optimized for Google Cloud Run.
+- **DevOps, Cloud Run Deployment & Health Check**:
+  - Multi-stage standalone `Dockerfile` (Node 20 Alpine) with `tini` as init process for graceful `SIGTERM` connection draining and non-root `nextjs:nodejs` execution on `process.env.PORT`.
+  - Added `GET /api/health` healthcheck endpoint returning `{ status: "ok" }`.
+  - Custom branded 404 (`src/app/not-found.tsx`) and 500 error boundary pages (`src/app/error.tsx`, `src/app/global-error.tsx`).
+  - Google Cloud Run automated deployment scripts (`scripts/deploy-cloud-run.sh`, `scripts/setup-secrets.sh`) targeting `asia-south1` with Secret Manager integration (`GEMINI_API_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) and zero secret leakage in logs.
   - GitHub Actions CI workflow executing dependency installation, typechecking, linting, unit testing, and production builds.
