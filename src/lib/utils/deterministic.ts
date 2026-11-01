@@ -1,4 +1,4 @@
-import { BudgetHealthResult, ProgressResult } from '../types/models';
+import type { BudgetHealthResult, ProgressResult } from '../types/models';
 
 /**
  * Deterministically formats an amount into Indian Rupees (INR)

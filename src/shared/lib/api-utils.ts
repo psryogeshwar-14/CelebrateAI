@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { RateLimitStatus } from '@/features/ai/types';
+import type { NextRequest} from 'next/server';
+import { NextResponse } from 'next/server';
+import type { RateLimitStatus } from '@/features/ai/types';
 
 export function extractClientIp(req: NextRequest): string {
   return (

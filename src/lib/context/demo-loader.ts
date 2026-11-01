@@ -1,8 +1,9 @@
-import { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
+import type { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
 import { computePlan } from '../engine/planner';
-import { ValidatedEnrichmentOutput, getOfflineFallbackEnrichment } from '../ai/validate';
+import type { ValidatedEnrichmentOutput} from '../ai/validate';
+import { getOfflineFallbackEnrichment } from '../ai/validate';
 import { BENGALURU_DEMO_EVENTS } from '../data/seeds';
-import { VendorOverride } from './celebrate-context.types';
+import type { VendorOverride } from './celebrate-context.types';
 
 export interface DemoEventState {
   computed: ComputedPlan;

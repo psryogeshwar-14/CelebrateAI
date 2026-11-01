@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ComputedPlan } from '@/lib/engine/types';
+import type { ComputedPlan } from '@/lib/engine/types';
 import { Send, Loader2, Sparkles } from 'lucide-react';
 import { logger } from '@/shared/lib/logger';
-import { ChatMessage, ChatMessageItem } from './ChatMessageItem';
+import type { ChatMessage} from './ChatMessageItem';
+import { ChatMessageItem } from './ChatMessageItem';
 import { ChatSuggestions } from './ChatSuggestions';
 
 interface AskCelebrateAIChatProps {

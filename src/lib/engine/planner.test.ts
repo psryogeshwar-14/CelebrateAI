@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { computePlan } from './planner';
-import { EventPlanningInput } from './types';
+import type { EventPlanningInput } from './types';
 
 describe('Engine: planner.ts (Deterministic Planning Orchestrator)', () => {
   const weddingInput: EventPlanningInput = {

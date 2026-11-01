@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Search, Filter, Plus } from 'lucide-react';
+import { Search, Plus } from 'lucide-react';
 
 interface TimelineFilterBarProps {
   searchQuery: string;

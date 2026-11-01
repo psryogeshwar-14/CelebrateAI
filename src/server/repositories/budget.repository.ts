@@ -1,5 +1,5 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Database } from '@/lib/types/database.types';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/types/database.types';
 
 export type BudgetItemRow = Database['public']['Tables']['budget_items']['Row'];
 export type BudgetItemInsert = Database['public']['Tables']['budget_items']['Insert'];

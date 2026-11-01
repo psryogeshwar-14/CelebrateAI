@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Modal } from '@/shared/ui/Modal';
-import { TimelineMilestone } from '@/lib/engine/types';
+import type { TimelineMilestone } from '@/lib/engine/types';
 import { MilestoneFormFields } from './MilestoneFormFields';
 
 interface CreateMilestoneModalProps {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { generateTimeline } from './timeline';
-import { EventPlanningInput } from './types';
+import type { EventPlanningInput } from './types';
 
 describe('Engine: timeline.ts', () => {
   const normalEventInput: EventPlanningInput = {

@@ -1,5 +1,5 @@
-import { RawCategoryRule } from './budget-rules';
-import { EventPlanningInput, BudgetCategoryAllocation } from './types';
+import type { RawCategoryRule } from './budget-rules';
+import type { EventPlanningInput, BudgetCategoryAllocation } from './types';
 import { roundToLargestRemainder } from '../utils/deterministic';
 
 function adjustGuestCountWeights(weights: Record<string, number>, input: EventPlanningInput): void {
@@ -135,7 +135,7 @@ function computeScaledPercentages(
 }
 
 function ensurePositiveIntegerAmounts(amounts: number[], totalBudget: number): number[] {
-  let adjusted = amounts.map((amt) => Math.max(1, amt));
+  const adjusted = amounts.map((amt) => Math.max(1, amt));
   let excess = adjusted.reduce((a, b) => a + b, 0) - totalBudget;
   while (excess > 0) {
     let maxIdx = 0;

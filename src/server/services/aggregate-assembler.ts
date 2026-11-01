@@ -1,5 +1,5 @@
-import { Database } from '@/lib/types/database.types';
-import {
+import type { Database } from '@/lib/types/database.types';
+import type {
   ThemeIdeaContent,
   MenuIdeaContent,
   RiskIdeaContent,
@@ -7,7 +7,7 @@ import {
   SavingTipIdeaContent,
 } from '@/lib/validations/schemas';
 import { calculateBudgetHealth, calculateProgress } from '@/lib/utils/deterministic';
-import { FullEventAggregate, EventModel, BudgetItemModel, TimelineTaskModel, VendorModel } from '@/lib/types/models';
+import type { FullEventAggregate, EventModel, BudgetItemModel, TimelineTaskModel, VendorModel } from '@/lib/types/models';
 
 export function assembleFullEventAggregate(
     eventRow: Database['public']['Tables']['events']['Row'],

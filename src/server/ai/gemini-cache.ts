@@ -1,6 +1,6 @@
 import { PLANNING_CONSTANTS } from '@/shared/config/constants';
-import { ComputedPlan } from '@/lib/engine/types';
-import { ValidatedEnrichmentOutput } from '@/lib/ai/validate';
+import type { ComputedPlan } from '@/lib/engine/types';
+import type { ValidatedEnrichmentOutput } from '@/lib/ai/validate';
 
 interface CacheEntry {
   timestamp: number;

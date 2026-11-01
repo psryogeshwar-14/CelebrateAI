@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ComputedPlan, BudgetCategoryAllocation } from '../engine/types';
+import type { ComputedPlan, BudgetCategoryAllocation } from '../engine/types';
 import { logger } from '@/shared/lib/logger';
 import { addDaysFormatted, clamp } from '../utils/deterministic';
 import { sanitizeText } from './sanitize';

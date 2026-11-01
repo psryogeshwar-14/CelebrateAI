@@ -1,4 +1,4 @@
-import { EventPlanningInput, ComputedBudgetResult } from './types';
+import type { EventPlanningInput, ComputedBudgetResult } from './types';
 import { getCityCostTier } from './city-tiers';
 import { getBaselineRules } from './budget-rules';
 import { computeCategoryWeights, allocateBudgetAmounts } from './budget-allocator';

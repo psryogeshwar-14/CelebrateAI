@@ -4,14 +4,15 @@ import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
 import { RunSheetTimeline } from '@/features/timeline';
-import { Palette, Utensils, ShieldAlert, Clock } from 'lucide-react';
 import { ThemeCard } from './ThemeCard';
 import { BanquetMenuSection } from './BanquetMenuSection';
 import { RiskMitigationTable } from './RiskMitigationTable';
+import { IdeasTabBar } from './IdeasTabBar';
+import type { IdeaTabKey } from './IdeasTabBar';
 
 export function IdeasFeature() {
   const { plan, aiEnrichment, isLoading } = useCelebrate();
-  const [activeTab, setActiveTab] = useState<'themes' | 'menu' | 'risks' | 'run_sheet'>('themes');
+  const [activeTab, setActiveTab] = useState<IdeaTabKey>('themes');
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
   if (isLoading || !plan) {
@@ -38,65 +39,10 @@ export function IdeasFeature() {
 
   return (
     <div className="space-y-8 pb-16">
-      {/* Sub Nav */}
       <EventSubNav title="Personalized Themes, Menu, Risks & Run Sheet" />
 
-      {/* Internal Tabs */}
-      <div className="flex items-center space-x-2 border-b border-stone-200 dark:border-stone-800 overflow-x-auto pb-2">
-        <button
-          type="button"
-          onClick={() => setActiveTab('themes')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'themes'
-              ? 'bg-amber-600 text-white shadow-xs'
-              : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50'
-          }`}
-        >
-          <Palette className="w-3.5 h-3.5" />
-          <span>3 Personalized Themes</span>
-        </button>
+      <IdeasTabBar activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <button
-          type="button"
-          onClick={() => setActiveTab('menu')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'menu'
-              ? 'bg-amber-600 text-white shadow-xs'
-              : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50'
-          }`}
-        >
-          <Utensils className="w-3.5 h-3.5" />
-          <span>Regional Menu</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('risks')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'risks'
-              ? 'bg-amber-600 text-white shadow-xs'
-              : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50'
-          }`}
-        >
-          <ShieldAlert className="w-3.5 h-3.5" />
-          <span>Risk Matrix</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('run_sheet')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'run_sheet'
-              ? 'bg-amber-600 text-white shadow-xs'
-              : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 hover:bg-stone-50'
-          }`}
-        >
-          <Clock className="w-3.5 h-3.5" />
-          <span>Day-Of Run Sheet</span>
-        </button>
-      </div>
-
-      {/* Tab 1: Themes */}
       {activeTab === 'themes' && (
         <div className="space-y-6">
           {themes.length === 0 ? (
@@ -117,13 +63,10 @@ export function IdeasFeature() {
         </div>
       )}
 
-      {/* Tab 2: Menu */}
       {activeTab === 'menu' && <BanquetMenuSection menu={menu} />}
 
-      {/* Tab 3: Risks */}
       {activeTab === 'risks' && <RiskMitigationTable risks={risks} />}
 
-      {/* Tab 4: Day-of Run Sheet */}
       {activeTab === 'run_sheet' && (
         <RunSheetTimeline
           runSheet={runSheet}

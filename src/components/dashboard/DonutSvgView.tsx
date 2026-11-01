@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { formatINR } from '@/lib/utils/deterministic';
-import { BudgetCategoryAllocation } from '@/lib/engine/types';
+import type { BudgetCategoryAllocation } from '@/lib/engine/types';
 
 export interface DonutSlice extends BudgetCategoryAllocation {
   strokeDasharray: string;

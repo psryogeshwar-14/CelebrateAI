@@ -1,10 +1,10 @@
-import {
+import type {
   EventPlanningInput,
   ComputedBudgetResult,
   VendorRecommendation,
 } from './types';
 import { addDaysFormatted, daysBetween, formatDateISO } from '../utils/deterministic';
-import { getVendorBlueprints, VendorBlueprint } from './vendor-rules';
+import { getVendorBlueprints } from './vendor-rules';
 
 export {
   WEDDING_VENDORS,

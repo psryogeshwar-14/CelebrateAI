@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest} from 'next/server';
+import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { generateGroundedAssistantReply, checkRateLimit } from '@/lib/ai/gemini-client';
-import { ComputedPlan } from '@/lib/engine/types';
+import type { ComputedPlan } from '@/lib/engine/types';
 import { logAuditEvent } from '@/lib/logging/audit';
 import { sanitizeText } from '@/lib/ai/validate';
 import { getErrorMessage } from '@/shared/lib/errors';

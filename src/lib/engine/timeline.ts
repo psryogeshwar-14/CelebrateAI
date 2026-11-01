@@ -1,6 +1,6 @@
-import { EventPlanningInput, TimelineMilestone } from './types';
+import type { EventPlanningInput, TimelineMilestone } from './types';
 import { addDaysFormatted, daysBetween, formatDateISO } from '../utils/deterministic';
-import { BASE_MILESTONES, BaseMilestoneDefinition } from './timeline-rules';
+import { BASE_MILESTONES } from './timeline-rules';
 
 export { BASE_MILESTONES } from './timeline-rules';
 export type { BaseMilestoneDefinition } from './timeline-rules';

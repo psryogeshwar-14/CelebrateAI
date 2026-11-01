@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Clock, User, FileText } from 'lucide-react';
+import { User } from 'lucide-react';
 
 interface RunSheetItem {
   time: string;

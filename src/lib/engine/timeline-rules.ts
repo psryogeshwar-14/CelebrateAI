@@ -1,4 +1,4 @@
-import { TaskOwner, TaskPriority } from './types';
+import type { TaskOwner, TaskPriority } from './types';
 
 export interface BaseMilestoneDefinition {
   id: string;

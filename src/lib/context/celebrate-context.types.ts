@@ -1,5 +1,5 @@
-import { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
-import { ValidatedEnrichmentOutput } from '../ai/validate';
+import type { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
+import type { ValidatedEnrichmentOutput } from '../ai/validate';
 
 export interface VendorOverride {
   status: string;

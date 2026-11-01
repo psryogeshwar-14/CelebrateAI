@@ -1,4 +1,4 @@
-import { BudgetCategoryEnum, EventTypeEnum, TaskPriorityEnum } from '@/lib/types/database.types';
+import type { BudgetCategoryEnum, EventTypeEnum } from '@/lib/types/database.types';
 
 export interface CategoryAllocationRule {
   category: BudgetCategoryEnum;

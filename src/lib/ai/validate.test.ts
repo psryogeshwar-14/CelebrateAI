@@ -5,7 +5,7 @@ import {
   getOfflineFallbackEnrichment,
 } from './validate';
 import { computePlan } from '../engine/planner';
-import { EventPlanningInput } from '../engine/types';
+import type { EventPlanningInput } from '../engine/types';
 
 describe('AI Validation: validate.ts', () => {
   const sampleInput: EventPlanningInput = {

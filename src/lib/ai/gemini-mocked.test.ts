@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { generatePlanEnrichment, generateGroundedAssistantReply, checkRateLimit } from './gemini-client';
 import { validateAndMergeEnrichment } from './validate';
 import { computePlan } from '../engine/planner';
-import { EventPlanningInput } from '../engine/types';
+import type { EventPlanningInput } from '../engine/types';
 
 describe('Gemini Client & AI Security Tests (Mocked API & Prompt Injection)', () => {
   const baseInput: EventPlanningInput = {

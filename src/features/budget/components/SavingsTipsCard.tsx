@@ -1,6 +1,6 @@
 import React from 'react';
 import { Lightbulb, Percent } from 'lucide-react';
-import { ValidatedSavingsTip } from '@/lib/ai/validate';
+import type { ValidatedSavingsTip } from '@/lib/ai/validate';
 import { formatINR } from '@/lib/utils/deterministic';
 
 interface SavingsTipsCardProps {

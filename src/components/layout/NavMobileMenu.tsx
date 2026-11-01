@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { EventType } from '@/lib/engine/types';
+import type { EventType } from '@/lib/engine/types';
 
 interface NavLinkItem {
   href: string;

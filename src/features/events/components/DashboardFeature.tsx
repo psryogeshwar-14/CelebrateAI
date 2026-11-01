@@ -8,7 +8,7 @@ import { BudgetDonutChart, EditSpendModal } from '@/features/budget';
 import { TimelineGanttView, RunSheetTimeline } from '@/features/timeline';
 import { VendorProgressCard, EditVendorModal } from '@/features/vendors';
 import { AskCelebrateAIChat } from '@/features/ai';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 import { DashboardFeasibilityAlert } from './DashboardFeasibilityAlert';
 import { DashboardThemesPreview } from './DashboardThemesPreview';
 

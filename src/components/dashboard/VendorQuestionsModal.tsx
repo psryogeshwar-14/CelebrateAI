@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 
 interface VendorQuestionsModalProps {
   vendor: VendorRecommendation | null;

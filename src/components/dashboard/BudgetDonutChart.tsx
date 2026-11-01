@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BudgetCategoryAllocation } from '@/lib/engine/types';
+import type { BudgetCategoryAllocation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
-import { DonutSvgView, DonutSlice } from './DonutSvgView';
+import type { DonutSlice } from './DonutSvgView';
+import { DonutSvgView } from './DonutSvgView';
 import { BudgetLegendList } from './BudgetLegendList';
 
 interface BudgetDonutChartProps {

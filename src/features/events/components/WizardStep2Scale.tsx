@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EventType } from '@/lib/engine/types';
+import type { EventType } from '@/lib/engine/types';
 import { Users, IndianRupee, AlertCircle } from 'lucide-react';
 import { BudgetDensityCard } from './BudgetDensityCard';
 

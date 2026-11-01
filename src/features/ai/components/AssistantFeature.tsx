@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 export function AssistantFeature() {
-  const { plan, aiEnrichment, isLoading } = useCelebrate();
+  const { plan, isLoading } = useCelebrate();
 
   if (isLoading || !plan) {
     return (

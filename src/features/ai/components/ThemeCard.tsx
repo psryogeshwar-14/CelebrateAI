@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Palette } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { ColorPaletteSwatch } from './ColorPaletteSwatch';
 
 interface ThemeCardProps {

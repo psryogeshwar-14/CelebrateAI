@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { computePlan } from '@/lib/engine/planner';
-import { EventPlanningInput } from '@/lib/engine/types';
-import { generatePlanEnrichment, generateGroundedAssistantReply } from '@/lib/ai/gemini-client';
+import type { EventPlanningInput } from '@/lib/engine/types';
+import { generateGroundedAssistantReply } from '@/lib/ai/gemini-client';
 import { formatINR, calculateProgress } from '@/lib/utils/deterministic';
 
 describe('PromptWars Final Verification: 16-Step User Journey', () => {
@@ -54,7 +54,7 @@ describe('PromptWars Final Verification: 16-Step User Journey', () => {
     // Step 6: Mark 3 tasks complete and verify progress updates.
     // ------------------------------------------------------------------------
     // Model task items with statuses
-    const initialTasks = plan5L.timeline.map((t) => ({ status: 'todo' as const }));
+    const initialTasks = plan5L.timeline.map(() => ({ status: 'todo' as const }));
     const initialProgress = calculateProgress(initialTasks);
     expect(initialProgress.completionPercentage).toBe(0);
     expect(initialProgress.completedTasks).toBe(0);

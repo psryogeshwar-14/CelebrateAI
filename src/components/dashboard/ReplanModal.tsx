@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { EventPlanningInput } from '@/lib/engine/types';
+import type { EventPlanningInput } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 import { Sparkles, Loader2 } from 'lucide-react';
 import { Modal } from '@/shared/ui/Modal';

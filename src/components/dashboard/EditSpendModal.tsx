@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BudgetCategoryAllocation } from '@/lib/engine/types';
+import type { BudgetCategoryAllocation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 import { Modal } from '@/shared/ui/Modal';
 

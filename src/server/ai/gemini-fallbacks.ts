@@ -1,4 +1,4 @@
-import { ComputedPlan } from '@/lib/engine/types';
+import type { ComputedPlan } from '@/lib/engine/types';
 import { recommendationService } from '@/features/ai';
 
 export function getOfflineFallback(plan: ComputedPlan) {

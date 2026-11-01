@@ -3,7 +3,7 @@ import { checkFeasibility } from './feasibility';
 import { calculateBudget } from './budget';
 import { generateTimeline } from './timeline';
 import { generateVendors } from './vendors';
-import { EventPlanningInput, TimelineMilestone } from './types';
+import type { EventPlanningInput, TimelineMilestone } from './types';
 
 describe('Engine: feasibility.ts', () => {
   const healthyWeddingInput: EventPlanningInput = {

@@ -1,5 +1,5 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Database, IdeaKindEnum } from '@/lib/types/database.types';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database, IdeaKindEnum } from '@/lib/types/database.types';
 
 export type IdeaRow = Database['public']['Tables']['ideas']['Row'];
 export type IdeaInsert = Database['public']['Tables']['ideas']['Insert'];

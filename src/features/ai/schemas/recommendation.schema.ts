@@ -1,4 +1,5 @@
-import { Type, Schema } from '@google/genai';
+import type { Schema } from '@google/genai';
+import { Type } from '@google/genai';
 import { z } from 'zod';
 
 // ============================================================================

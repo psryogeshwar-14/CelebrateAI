@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 import { ExternalLink, Edit3, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
 import { VendorQuestionsAccordion } from './VendorQuestionsAccordion';

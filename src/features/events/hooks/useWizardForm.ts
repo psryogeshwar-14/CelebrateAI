@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCelebrate } from '@/lib/context/celebrate-context';
-import { EventType, StylePreference, VenueTypePreference } from '@/lib/engine/types';
+import type { EventType, StylePreference, VenueTypePreference } from '@/lib/engine/types';
 import { getErrorMessage } from '@/shared/lib/errors';
 import { logger } from '@/shared/lib/logger';
 

@@ -1,7 +1,6 @@
-import { ComputedPlan } from '../engine/types';
-import { addDaysFormatted, clamp } from '../utils/deterministic';
-import { sanitizeText } from './sanitize';
-import {
+import type { ComputedPlan } from '../engine/types';
+import { addDaysFormatted } from '../utils/deterministic';
+import type {
   ValidatedEnrichmentOutput,
   ValidatedSavingsTip,
   ValidatedPersonalTask,
@@ -11,11 +10,6 @@ export function getOfflineFallbackEnrichment(plan: ComputedPlan): ValidatedEnric
   const { input, budget } = plan;
   const eventDate = input.eventDate;
   const todayStr = input.currentDate || new Date().toISOString().split('T')[0];
-
-  // Map of valid category keys
-  const validCategoriesMap = new Map(
-    budget.allocations.map((a) => [a.category.toLowerCase(), a])
-  );
 
   let themes: ValidatedEnrichmentOutput['themes'];
   let menu: ValidatedEnrichmentOutput['menu'];

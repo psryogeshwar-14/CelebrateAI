@@ -1,4 +1,4 @@
-import { Json } from '../../types/database.types';
+import type { Json } from '../../types/database.types';
 
 export const COMMUNITY_IDEAS: Array<{
   kind: 'theme' | 'menu' | 'risk' | 'run_sheet' | 'saving_tip';

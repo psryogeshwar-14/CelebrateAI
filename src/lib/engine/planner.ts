@@ -1,4 +1,4 @@
-import { EventPlanningInput, ComputedPlan } from './types';
+import type { EventPlanningInput, ComputedPlan } from './types';
 import { calculateBudget } from './budget';
 import { generateTimeline } from './timeline';
 import { generateVendors } from './vendors';

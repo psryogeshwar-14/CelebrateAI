@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { formatINR } from '@/lib/utils/deterministic';
-import { DonutSlice } from './DonutSvgView';
+import type { DonutSlice } from './DonutSvgView';
 
 interface BudgetLegendListProps {
   slices: DonutSlice[];

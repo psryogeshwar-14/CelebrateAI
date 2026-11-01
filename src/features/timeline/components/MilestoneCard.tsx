@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { TimelineMilestone } from '@/lib/engine/types';
+import type { TimelineMilestone } from '@/lib/engine/types';
 import { CheckCircle2, Clock, User, AlertCircle } from 'lucide-react';
 
 interface MilestoneCardProps {

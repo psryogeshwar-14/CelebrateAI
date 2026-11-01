@@ -1,10 +1,10 @@
-import {
+import type {
   ComputedBudgetResult,
   BudgetCategoryAllocation,
   BudgetHealthResult,
   CateringFeasibility,
 } from '@/lib/engine/types';
-import { BudgetItemModel } from '@/lib/types/models';
+import type { BudgetItemModel } from '@/lib/types/models';
 
 export type {
   ComputedBudgetResult,

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import { POST as planHandler } from '@/app/api/plan/route';
 import { middleware } from '@/middleware';
-import { logAuditEvent, AuditLogEntry } from '@/lib/logging/audit';
+import { logAuditEvent } from '@/lib/logging/audit';
 
 describe('Security Hardening & Production Safeguards', () => {
   const validBasePayload = {

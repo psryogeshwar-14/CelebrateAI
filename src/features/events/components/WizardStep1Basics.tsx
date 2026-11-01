@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EventType } from '@/lib/engine/types';
+import type { EventType } from '@/lib/engine/types';
 import { EventTypeSelector } from './EventTypeSelector';
 import { EventTitleDateInputs } from './EventTitleDateInputs';
 

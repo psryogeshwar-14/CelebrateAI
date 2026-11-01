@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 import { Modal } from '@/shared/ui/Modal';
 

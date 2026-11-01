@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/lib/types/database.types';
+import type { Database } from '@/lib/types/database.types';
 
 export function createAdminSupabaseClient() {
   if (typeof window !== 'undefined') {

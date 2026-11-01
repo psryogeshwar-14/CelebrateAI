@@ -1,5 +1,5 @@
-import { ComputedPlan } from '@/lib/engine/types';
-import {
+import type { ComputedPlan } from '@/lib/engine/types';
+import type {
   ValidatedEnrichmentOutput,
   ValidatedSavingsTip,
   ValidatedPersonalTask,
@@ -8,8 +8,7 @@ import {
   RiskMitigation,
   RunSheetItem,
 } from '../types';
-import { addDaysFormatted, clamp } from '@/lib/utils/deterministic';
-import { sanitizeText } from './recommendation.service';
+import { addDaysFormatted } from '@/lib/utils/deterministic';
 
 /**
  * Deterministic offline templates providing rich recommendations when Gemini is unavailable.

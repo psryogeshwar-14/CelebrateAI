@@ -1,4 +1,4 @@
-import { SeedEventBundle } from './types';
+import type { SeedEventBundle } from './types';
 import { WEDDING_SEED_BUNDLE } from './wedding.seed';
 import { BIRTHDAY_SEED_BUNDLE } from './birthday.seed';
 import { COMMUNITY_SEED_BUNDLE } from './community.seed';

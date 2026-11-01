@@ -1,4 +1,4 @@
-import {
+import type {
   EventTypeEnum,
   EventStatusEnum,
   BudgetCategoryEnum,
@@ -7,7 +7,7 @@ import {
   VendorStatusEnum,
   IdeaKindEnum,
 } from './database.types';
-import {
+import type {
   ThemeIdeaContent,
   MenuIdeaContent,
   RiskIdeaContent,

@@ -1,5 +1,5 @@
-import { ComputedPlan } from '@/lib/engine/types';
-import { ValidatedEnrichmentOutput, RateLimitStatus } from '../types';
+import type { ComputedPlan } from '@/lib/engine/types';
+import type { ValidatedEnrichmentOutput, RateLimitStatus } from '../types';
 import { PLANNING_CONSTANTS } from '@/shared/config/constants';
 
 export interface CacheEntry {

@@ -1,5 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
-import { Database } from '@/lib/types/database.types';
+import type { Database } from '@/lib/types/database.types';
 import { logger } from '@/shared/lib/logger';
 
 export function createClientSupabase() {

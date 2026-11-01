@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldAlert } from 'lucide-react';
-import { ValidatedEnrichmentOutput } from '@/lib/ai/validate';
+import type { ValidatedEnrichmentOutput } from '@/lib/ai/validate';
 
 interface RiskMitigationTableProps {
   risks?: ValidatedEnrichmentOutput['risks'];

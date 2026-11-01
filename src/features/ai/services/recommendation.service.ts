@@ -1,6 +1,6 @@
 import { getOfflineFallback } from './offline-fallbacks';
-import { ComputedPlan } from '@/lib/engine/types';
-import {
+import type { ComputedPlan } from '@/lib/engine/types';
+import type {
   ValidatedEnrichmentOutput,
   ValidatedSavingsTip,
   ValidatedPersonalTask,

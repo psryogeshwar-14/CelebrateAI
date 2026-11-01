@@ -5,7 +5,7 @@ import { GeminiClientAdapter } from '../adapters/gemini-client';
 import { buildEventPlannerPrompt } from '../prompts/event-planner.prompt';
 import { buildAssistantSystemPrompt } from '../prompts/assistant.prompt';
 import { computePlan } from '@/lib/engine/planner';
-import { IGeminiClientAdapter, GeminiGenerateOptions, GeminiResponse } from '../types';
+import type { IGeminiClientAdapter } from '../types';
 
 describe('Gemini AI Integration: GeminiService & RecommendationService', () => {
   const testInput = {

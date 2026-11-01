@@ -1,4 +1,4 @@
-import { ComputedPlan } from '../engine/types';
+import type { ComputedPlan } from '../engine/types';
 import { formatINR } from '../utils/deterministic';
 import { sanitizeText } from './validate';
 

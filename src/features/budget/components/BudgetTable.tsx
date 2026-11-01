@@ -1,6 +1,6 @@
 import React from 'react';
 import { Edit3 } from 'lucide-react';
-import { BudgetCategoryAllocation } from '@/lib/engine/types';
+import type { BudgetCategoryAllocation } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 
 interface BudgetTableProps {

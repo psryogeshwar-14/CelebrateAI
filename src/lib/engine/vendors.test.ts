@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { generateVendors } from './vendors';
 import { calculateBudget } from './budget';
-import { EventPlanningInput } from './types';
+import type { EventPlanningInput } from './types';
 
 describe('Engine: vendors.ts', () => {
   const weddingInput: EventPlanningInput = {

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 import { VendorProgressItem } from './VendorProgressItem';
 import { VendorQuestionsModal } from './VendorQuestionsModal';
 

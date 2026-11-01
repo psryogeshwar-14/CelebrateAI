@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ComputedPlan } from '@/lib/engine/types';
+import type { ComputedPlan } from '@/lib/engine/types';
 import { formatINR } from '@/lib/utils/deterministic';
 
 interface ExportBriefDocumentProps {

@@ -1,12 +1,13 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
+import type { ComputedPlan, EventPlanningInput, EventType } from '../engine/types';
 import { computePlan } from '../engine/planner';
-import { ValidatedEnrichmentOutput, getOfflineFallbackEnrichment } from '../ai/validate';
+import type { ValidatedEnrichmentOutput} from '../ai/validate';
+import { getOfflineFallbackEnrichment } from '../ai/validate';
 import { getErrorMessage } from '@/shared/lib/errors';
 import { logger } from '@/shared/lib/logger';
-import { CelebrateContextType, VendorOverride } from './celebrate-context.types';
+import type { CelebrateContextType, VendorOverride } from './celebrate-context.types';
 import { useThemeState } from './useThemeState';
 import { buildDemoEventState } from './demo-loader';
 

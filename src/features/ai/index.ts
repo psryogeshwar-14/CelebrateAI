@@ -1,7 +1,7 @@
-import { ComputedPlan } from '@/lib/engine/types';
+import type { ComputedPlan } from '@/lib/engine/types';
 import { geminiService } from './services/gemini.service';
 import { recommendationService, sanitizeText } from './services/recommendation.service';
-import { ValidatedEnrichmentOutput, AssistantChatReply, GeminiServiceOptions } from './types';
+import type { ValidatedEnrichmentOutput, AssistantChatReply, GeminiServiceOptions } from './types';
 
 // Adapters
 export * from './adapters/gemini-client';

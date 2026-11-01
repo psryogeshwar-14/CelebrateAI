@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Palette } from 'lucide-react';
-import { ThemeRecommendation } from '@/features/ai/types';
+import type { ThemeRecommendation } from '@/features/ai/types';
 
 interface DashboardThemesPreviewProps {
   themes?: ThemeRecommendation[];

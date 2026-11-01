@@ -1,5 +1,5 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Database } from '@/lib/types/database.types';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/types/database.types';
 
 export type TimelineTaskRow = Database['public']['Tables']['timeline_tasks']['Row'];
 export type TimelineTaskInsert = Database['public']['Tables']['timeline_tasks']['Insert'];

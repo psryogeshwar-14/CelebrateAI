@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EventType } from '@/lib/engine/types';
+import type { EventType } from '@/lib/engine/types';
 import { Heart, Cake, Users2 } from 'lucide-react';
 
 interface EventTypeSelectorProps {

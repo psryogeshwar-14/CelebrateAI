@@ -1,4 +1,4 @@
-import { SeedEventBundle } from './types';
+import type { SeedEventBundle } from './types';
 import { COMMUNITY_IDEAS } from './community-ideas';
 
 export const COMMUNITY_SEED_BUNDLE: SeedEventBundle =   {

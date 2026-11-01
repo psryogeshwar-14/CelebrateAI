@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { StylePreference, VenueTypePreference } from '@/lib/engine/types';
+import type { StylePreference, VenueTypePreference } from '@/lib/engine/types';
 import { DietaryAccessibilityOptions } from './DietaryAccessibilityOptions';
 
 interface WizardStep3StyleProps {

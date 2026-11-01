@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useCelebrate } from '@/lib/context/celebrate-context';
 import { EventSubNav } from '@/components/layout/EventSubNav';
 import { EditVendorModal } from '@/features/vendors';
-import { VendorRecommendation } from '@/lib/engine/types';
+import type { VendorRecommendation } from '@/lib/engine/types';
 import { Search } from 'lucide-react';
 import { VendorKpiCards } from './VendorKpiCards';
 import { VendorCard } from './VendorCard';

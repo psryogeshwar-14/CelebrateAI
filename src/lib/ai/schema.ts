@@ -1,4 +1,5 @@
-import { Type, Schema } from '@google/genai';
+import type { Schema } from '@google/genai';
+import { Type } from '@google/genai';
 
 /**
  * Strict responseJsonSchema for CelebrateAI plan enrichment.

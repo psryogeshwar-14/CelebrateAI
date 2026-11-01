@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TimelineMilestone } from '@/lib/engine/types';
+import type { TimelineMilestone } from '@/lib/engine/types';
 import { GanttMilestoneItem } from './GanttMilestoneItem';
-import { GanttFilterButtons, GanttFilterType } from './GanttFilterButtons';
+import type { GanttFilterType } from './GanttFilterButtons';
+import { GanttFilterButtons } from './GanttFilterButtons';
 
 interface TimelineGanttViewProps {
   timeline: TimelineMilestone[];

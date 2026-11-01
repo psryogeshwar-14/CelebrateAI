@@ -1,5 +1,5 @@
-import { ComputedPlan } from '@/lib/engine/types';
-import {
+import type { ComputedPlan } from '@/lib/engine/types';
+import type {
   IGeminiClientAdapter,
   ValidatedEnrichmentOutput,
   AssistantChatReply,
@@ -7,8 +7,10 @@ import {
   GeminiServiceOptions,
 } from '../types';
 import { geminiClientAdapter } from '../adapters/gemini-client';
-import { recommendationService, RecommendationService, sanitizeText } from './recommendation.service';
-import { aiCacheService, AICacheService } from './ai-cache';
+import type { RecommendationService} from './recommendation.service';
+import { recommendationService, sanitizeText } from './recommendation.service';
+import type { AICacheService } from './ai-cache';
+import { aiCacheService } from './ai-cache';
 import { buildEventPlannerPrompt } from '../prompts/event-planner.prompt';
 import { buildReplanPrompt } from '../prompts/replan.prompt';
 import { buildAssistantSystemPrompt } from '../prompts/assistant.prompt';

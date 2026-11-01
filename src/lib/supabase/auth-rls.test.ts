@@ -1,13 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { createClient } from './client';
-import { createAdminSupabaseClient } from './admin';
 import { BENGALURU_DEMO_EVENTS } from '../data/seeds';
 
 describe('Supabase Auth & Row-Level Security (RLS) Policy Verification', () => {
   it('client initialization never exposes the service-role key to the browser', () => {
     // Check client environment access
-    const browserClientEnv = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const _browserClientEnv = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const _serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     // Service role key must NEVER start with NEXT_PUBLIC_
     expect(process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY).toBeUndefined();

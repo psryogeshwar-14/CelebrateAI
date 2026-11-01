@@ -1,4 +1,4 @@
-import { SeedEventBundle } from './types';
+import type { SeedEventBundle } from './types';
 import { BIRTHDAY_IDEAS } from './birthday-ideas';
 
 export const BIRTHDAY_SEED_BUNDLE: SeedEventBundle =   {

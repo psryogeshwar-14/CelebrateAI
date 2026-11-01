@@ -1,12 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest} from 'next/server';
+import { NextResponse } from 'next/server';
 import { computePlan } from '@/lib/engine/planner';
-import { EventPlanningInput, EventType, StylePreference, VenueTypePreference } from '@/lib/engine/types';
+import type { EventPlanningInput, EventType, StylePreference, VenueTypePreference } from '@/lib/engine/types';
 import { generatePlanEnrichment, checkRateLimit } from '@/lib/ai/gemini-client';
 import { logAuditEvent } from '@/lib/logging/audit';
 import { getErrorMessage } from '@/shared/lib/errors';
 import { logger } from '@/shared/lib/logger';
 import { extractClientIp, buildRateLimitResponse } from '@/shared/lib/api-utils';
-import { planRequestZodSchema, PlanRequestInput } from '@/features/events/schemas/plan-request.schema';
+import type { PlanRequestInput } from '@/features/events/schemas/plan-request.schema';
+import { planRequestZodSchema } from '@/features/events/schemas/plan-request.schema';
 
 function parsePlanningInput(data: PlanRequestInput): EventPlanningInput {
   return {

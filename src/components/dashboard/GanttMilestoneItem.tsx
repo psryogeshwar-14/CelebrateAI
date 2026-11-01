@@ -1,28 +1,47 @@
 'use client';
 
 import React from 'react';
-import { TimelineMilestone } from '@/lib/engine/types';
+import type { TimelineMilestone } from '@/lib/engine/types';
 import { CheckCircle2, Circle, AlertCircle, Calendar } from 'lucide-react';
 
 interface GanttMilestoneItemProps {
   task: TimelineMilestone;
   isDone: boolean;
-  onToggle: (id: string) => void;
+  onToggle: (_id: string) => void;
+}
+
+function getItemCardClass(isDone: boolean, isOverdue: boolean): string {
+  if (isDone) return 'bg-stone-50 dark:bg-stone-950/30 border-stone-200/60 dark:border-stone-800/60 opacity-60';
+  if (isOverdue) return 'bg-rose-50/40 dark:bg-rose-950/20 border-rose-200 dark:border-rose-900/40';
+  return 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 hover:border-amber-400';
+}
+
+function MilestoneBadges({ isOverdue, priority, isDone }: { isOverdue: boolean; priority: string; isDone: boolean }) {
+  return (
+    <>
+      {isOverdue && (
+        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800 inline-flex items-center space-x-1">
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span>Do now (Overdue)</span>
+        </span>
+      )}
+      {priority === 'critical' && !isDone && (
+        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+          Critical Path
+        </span>
+      )}
+    </>
+  );
 }
 
 export function GanttMilestoneItem({ task, isDone, onToggle }: GanttMilestoneItemProps) {
   const isOverdue = task.isOverdue && !isDone;
+  const cardClass = getItemCardClass(isDone, isOverdue);
 
   return (
     <div
       onClick={() => onToggle(task.id)}
-      className={`group p-3.5 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
-        isDone
-          ? 'bg-stone-50 dark:bg-stone-950/30 border-stone-200/60 dark:border-stone-800/60 opacity-60'
-          : isOverdue
-          ? 'bg-rose-50/40 dark:bg-rose-950/20 border-rose-200 dark:border-rose-900/40'
-          : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 hover:border-amber-400'
-      }`}
+      className={`group p-3.5 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${cardClass}`}
     >
       <div className="flex items-start space-x-3">
         <button
@@ -39,33 +58,13 @@ export function GanttMilestoneItem({ task, isDone, onToggle }: GanttMilestoneIte
 
         <div className="space-y-1">
           <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-            <span
-              className={`text-sm font-semibold ${
-                isDone
-                  ? 'line-through text-stone-500 dark:text-stone-400'
-                  : 'text-stone-900 dark:text-stone-100'
-              }`}
-            >
+            <span className={`text-sm font-semibold ${isDone ? 'line-through text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
               {task.title}
             </span>
-
-            {isOverdue && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800 inline-flex items-center space-x-1">
-                <AlertCircle className="w-3.5 h-3.5" />
-                <span>Do now (Overdue)</span>
-              </span>
-            )}
-
-            {task.priority === 'critical' && !isDone && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
-                Critical Path
-              </span>
-            )}
+            <MilestoneBadges isOverdue={isOverdue} priority={task.priority} isDone={isDone} />
           </div>
 
-          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1">
-            {task.description}
-          </p>
+          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1">{task.description}</p>
         </div>
       </div>
 

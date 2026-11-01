@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FeasibilityConflict } from '@/lib/engine/types';
+import type { FeasibilityConflict } from '@/lib/engine/types';
 import { ShieldAlert } from 'lucide-react';
 
 interface DashboardFeasibilityAlertProps {

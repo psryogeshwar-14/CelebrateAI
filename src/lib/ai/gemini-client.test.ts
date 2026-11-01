@@ -7,7 +7,7 @@ import {
 } from './gemini-client';
 import { buildEnrichmentPrompt, buildAssistantSystemInstruction } from './prompts';
 import { computePlan } from '../engine/planner';
-import { EventPlanningInput } from '../engine/types';
+import type { EventPlanningInput } from '../engine/types';
 
 describe('AI Client: gemini-client.ts', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import { EventPlanningInput, ComputedPlan } from '@/lib/engine/types';
-import { FullEventAggregate, EventModel } from '@/lib/types/models';
+import type { EventPlanningInput, ComputedPlan } from '@/lib/engine/types';
+import type { FullEventAggregate, EventModel } from '@/lib/types/models';
 
 export type { EventPlanningInput, ComputedPlan, FullEventAggregate, EventModel };
 

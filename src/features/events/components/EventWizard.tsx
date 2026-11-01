@@ -93,14 +93,10 @@ export function EventWizard() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {currentStep === 1 && (
             <WizardStep1Basics
-              eventType={eventType}
-              setEventType={setEventType}
-              title={title}
-              setTitle={setTitle}
-              city={city}
-              setCity={setCity}
-              eventDate={eventDate}
-              setEventDate={setEventDate}
+              eventType={eventType} setEventType={setEventType}
+              title={title} setTitle={setTitle}
+              city={city} setCity={setCity}
+              eventDate={eventDate} setEventDate={setEventDate}
               formErrors={formErrors}
             />
           )}
@@ -108,27 +104,20 @@ export function EventWizard() {
           {currentStep === 2 && (
             <WizardStep2Scale
               eventType={eventType}
-              guestCount={guestCount}
-              setGuestCount={setGuestCount}
+              guestCount={guestCount} setGuestCount={setGuestCount}
               totalBudget={totalBudget}
-              budgetDisplay={budgetDisplay}
-              handleBudgetChange={handleBudgetChange}
+              budgetDisplay={budgetDisplay} handleBudgetChange={handleBudgetChange}
               formErrors={formErrors}
             />
           )}
 
           {currentStep === 3 && (
             <WizardStep3Style
-              style={style}
-              setStyle={setStyle}
-              venueType={venueType}
-              setVenueType={setVenueType}
-              selectedDietary={selectedDietary}
-              toggleDietary={toggleDietary}
-              selectedAccessibility={selectedAccessibility}
-              toggleAccessibility={toggleAccessibility}
-              specialRequests={specialRequests}
-              setSpecialRequests={setSpecialRequests}
+              style={style} setStyle={setStyle}
+              venueType={venueType} setVenueType={setVenueType}
+              selectedDietary={selectedDietary} toggleDietary={toggleDietary}
+              selectedAccessibility={selectedAccessibility} toggleAccessibility={toggleAccessibility}
+              specialRequests={specialRequests} setSpecialRequests={setSpecialRequests}
             />
           )}
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { computePlan } from '@/lib/engine/planner';
-import { EventPlanningInput } from '@/lib/engine/types';
+import type { EventPlanningInput } from '@/lib/engine/types';
 import { generatePlanEnrichment, generateGroundedAssistantReply } from '@/lib/ai/gemini-client';
 import { formatINR } from '@/lib/utils/deterministic';
 
