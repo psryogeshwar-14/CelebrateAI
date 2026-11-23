@@ -342,3 +342,5 @@ CelebrateAI requires **no login or credentials to explore in demo mode**:
 ## 📜 License
 
 Built for **PromptWars Virtual Challenge 5**. Distributed under the [MIT License](./LICENSE).
+
+code: XEVF3S
